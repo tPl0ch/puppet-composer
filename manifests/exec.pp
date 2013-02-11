@@ -36,7 +36,7 @@ define composer::exec (
     fail("Only one of \$prefer_source or \$prefer_dist can be true.")
   }
 
-  $command = "php ${composer::target_dir}/${composer::composer_file} ${type}"
+  $command = "php ${composer::target_dir}/${composer::composer_file} ${cmd}"
 
   exec { "composer_update_${title}":
     command   => template('composer/exec.erb'),
