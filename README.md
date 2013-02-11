@@ -6,10 +6,25 @@ install php composer - from http://getcomposer.org/ with puppet-composer module
 
 ## Installation
 
+#### Installation via puppet forge (RECOMMENDED, automatically installs all dependencies)
+
     puppet module install --target-dir=/your/path/to/modules tPl0ch-composer
+
+#### Installation via git submodule
+
+    git submodule add git://github.com/tPl0ch/puppet-composer.git modules/composer
+
+## Dependencies
+
+This module requires the module ```puppetlabs/git```, which when installed with the
 
 ## Usage
 
+#### Simple include just installs with defaults
+
+In your manifest.pp:
+
+    include composer
 
 #### Configuring the composer install
 
