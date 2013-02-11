@@ -46,8 +46,8 @@ In your manifest.pp:
         cmd                  => 'update',  # REQUIRED
         cwd                  => '/vagrant/silex', # REQUIRED
         packages             => ['silex/silex', 'symfony/browser-kit'], # leave empty or omit to update whole project
-        prefer_source        => false,
-        prefer_dist          => false,
+        prefer_source        => false, # Only one of prefer_source or prefer_dist can be true
+        prefer_dist          => false, # Only one of prefer_source or prefer_dist can be true
         dry_run              => false, # Minimum stability setting
         no_custom_installers => false, # No custom installers
         no_scripts           => false, # No script execution

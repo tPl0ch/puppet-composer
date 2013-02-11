@@ -35,9 +35,7 @@ class composer(
   $download_method = $composer::params::download_method,
   $logoutput       = $composer::params::logoutput,
   $tmp_path        = $composer::params::tmp_path,
-  $php_package     = $composer::params::php_package,
-  $enable_suhosin  = $composer::params::enable_suhosin,
-  $package_suhosin = $composer::params::package_suhosin
+  $php_package     = $composer::params::php_package
 ) inherits composer::params {
 
   if defined(Package[$php_package]) == false {
