@@ -45,6 +45,7 @@ In your manifest.pp:
     composer::project { 'silex':
         project_name   => 'fabpot/silex-skeleton',  # REQUIRED
         target_dir     => '/vagrant/silex', # REQUIRED
+        version        => '2.1.x-dev', # Some valid version string
         prefer_source  => true,
         stability      => 'dev', # Minimum stability setting
         keep_vcs       => false, # Keep the VCS information
