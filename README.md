@@ -64,7 +64,7 @@ In your manifest.pp:
         packages             => ['silex/silex', 'symfony/browser-kit'], # leave empty or omit to update whole project
         prefer_source        => false, # Only one of prefer_source or prefer_dist can be true
         prefer_dist          => false, # Only one of prefer_source or prefer_dist can be true
-        dry_run              => false, # Minimum stability setting
+        dry_run              => false, # Just simulate actions
         no_custom_installers => false, # No custom installers
         no_scripts           => false, # No script execution
         no_interaction       => true, # No interactive questions
@@ -82,7 +82,7 @@ In your manifest.pp:
         cwd                  => '/vagrant/silex', # REQUIRED
         prefer_source        => false,
         prefer_dist          => false,
-        dry_run              => false, # Minimum stability setting
+        dry_run              => false, # Just simulate actions
         no_custom_installers => false, # No custom installers
         no_scripts           => false, # No script execution
         no_interaction       => true, # No interactive questions
