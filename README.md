@@ -16,7 +16,7 @@ install php composer - from http://getcomposer.org/ with puppet-composer module
 
 ## Dependencies
 
-This module requires the module ```puppetlabs/git```, which when installed with the
+This module requires the module ```puppetlabs/git```
 
 ## Usage
 
