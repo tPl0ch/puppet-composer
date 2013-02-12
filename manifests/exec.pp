@@ -28,6 +28,8 @@ define composer::exec (
   require composer
   require git
 
+  Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}" }
+
   if $cmd != 'install' and $cmd != 'update' {
     fail("Only types 'install' and 'update' are allowed, $type given")
   }
@@ -42,6 +44,5 @@ define composer::exec (
     command   => template('composer/exec.erb'),
     cwd       => $cwd,
     logoutput => $logoutput,
-    path      => [ $composer::target_dir ],
   }
 }

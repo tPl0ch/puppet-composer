@@ -38,6 +38,8 @@ class composer(
   $php_package     = $composer::params::php_package
 ) inherits composer::params {
 
+  Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:$target_dir" }
+
   if defined(Package[$php_package]) == false {
     package { $php_package: ensure => present, }
   }
@@ -58,7 +60,6 @@ class composer(
       ],
       creates     => "$tmp_path/composer.phar",
       logoutput   => $logoutput,
-      path        => [ $target_dir ],
     }
   }
   elsif $download_method == 'wget' {
@@ -76,7 +77,6 @@ class composer(
       ],
       creates     => "$tmp_path/composer.phar",
       logoutput   => $logoutput,
-      path        => [ $target_dir ],
     }
   }
   else {

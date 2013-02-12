@@ -48,6 +48,8 @@ define composer::project(
   require git
   require composer
 
+  Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}" }
+
   $exec_name    = "composer_create_project_${title}"
   $base_command = "php ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
   $end_command  = "${project_name} ${target_dir}"
@@ -87,6 +89,5 @@ define composer::project(
     tries   => $tries,
     timeout => $timeout,
     unless  => "test -d ${target_dir}",
-    path      => [ $composer::target_dir ],
   }
 }
