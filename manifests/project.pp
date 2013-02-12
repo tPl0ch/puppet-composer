@@ -87,5 +87,6 @@ define composer::project(
     tries   => $tries,
     timeout => $timeout,
     unless  => "test -d ${target_dir}",
+    path      => [ $composer::target_dir ],
   }
 }

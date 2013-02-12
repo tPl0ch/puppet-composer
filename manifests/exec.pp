@@ -42,5 +42,6 @@ define composer::exec (
     command   => template('composer/exec.erb'),
     cwd       => $cwd,
     logoutput => $logoutput,
+    path      => [ $composer::target_dir ],
   }
 }

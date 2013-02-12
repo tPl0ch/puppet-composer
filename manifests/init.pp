@@ -58,6 +58,7 @@ class composer(
       ],
       creates     => "$tmp_path/composer.phar",
       logoutput   => $logoutput,
+      path        => [ $target_dir ],
     }
   }
   elsif $download_method == 'wget' {
@@ -75,6 +76,7 @@ class composer(
       ],
       creates     => "$tmp_path/composer.phar",
       logoutput   => $logoutput,
+      path        => [ $target_dir ],
     }
   }
   else {
