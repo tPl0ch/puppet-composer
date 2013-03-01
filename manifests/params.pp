@@ -20,6 +20,14 @@ class composer::params {
       $tmp_path        = '/home/vagrant'
       $php_package     = 'php5-cli'
     }
+    'RedHat': {
+    	$target_dir = '/usr/bin'
+    	$composer_file = 'composer'
+    	$download_method = 'curl'
+    	$logoutput = false
+    	$tmp_path = '/tmp'
+    	$php_package = 'php'
+    }
     default: {
       fail("Unsupported platform: ${::osfamily}")
     }
