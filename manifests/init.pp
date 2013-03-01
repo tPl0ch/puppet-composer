@@ -40,11 +40,7 @@ class composer(
 
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:$target_dir" }
 
-  if defined(Package[$php_package]) == false {
-    package { $php_package: ensure => present, }
-  }
-
-  # download composer
+    # download composer
   if $download_method == 'curl' {
 
     if defined(Package['curl']) == false {
@@ -56,7 +52,6 @@ class composer(
       cwd         => $tmp_path,
       require     => [
         Package['curl', $php_package],
-        Augeas['allow_url_fopen', 'whitelist_phar'],
       ],
       creates     => "$tmp_path/composer.phar",
       logoutput   => $logoutput,
@@ -93,21 +88,7 @@ class composer(
     ensure      => present,
     source      => "$tmp_path/composer.phar",
     require     => [ Exec['download_composer'], File[$target_dir], ],
-    group       => 'staff',
+    group       => 'root',
     mode        => '0755',
-  }
-
-  # set /etc/php5/cli/php.ini/suhosin.executor.include.whitelist = phar
-  augeas { 'whitelist_phar':
-    context     => '/files/etc/php5/conf.d/suhosin.ini/suhosin',
-    changes     => 'set suhosin.executor.include.whitelist phar',
-    require     => Package[$php_package],
-  }
-
-  # set /etc/php5/cli/php.ini/PHP/allow_url_fopen = On
-  augeas{ 'allow_url_fopen':
-    context     => '/files/etc/php5/cli/php.ini/PHP',
-    changes     => 'set allow_url_fopen On',
-    require     => Package[$php_package],
   }
 }
