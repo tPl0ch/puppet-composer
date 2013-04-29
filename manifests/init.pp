@@ -101,7 +101,7 @@ class composer(
   augeas { 'whitelist_phar':
     context     => '/files/etc/php5/conf.d/suhosin.ini/suhosin',
     changes     => 'set suhosin.executor.include.whitelist phar',
-    require     => Package[$php_package],
+    require     => Package["php5-suhosin"],
   }
 
   # set /etc/php5/cli/php.ini/PHP/allow_url_fopen = On
