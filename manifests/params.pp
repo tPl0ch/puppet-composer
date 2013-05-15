@@ -12,12 +12,12 @@
 #
 class composer::params {
   case $::osfamily {
-    'Debian': {
+    ( 'Redhat' | 'Centos' | 'Debian'): {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
       $logoutput       = false
-      $tmp_path        = '/home/vagrant'
+      $tmp_path        = '/tmp/'
       $php_package     = 'php5-cli'
     }
     default: {
