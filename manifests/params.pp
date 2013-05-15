@@ -5,6 +5,7 @@
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
+# Andrew Johnstone <andrew@ajohnstone.com>
 #
 # === Copyright
 #
@@ -12,12 +13,12 @@
 #
 class composer::params {
   case $::osfamily {
-    ( 'Redhat' | 'Centos' | 'Debian'): {
+    'Redhat','Centos','Debian': {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
       $logoutput       = false
-      $tmp_path        = '/tmp/'
+      $tmp_path        = '/tmp'
       $php_package     = 'php5-cli'
     }
     default: {
