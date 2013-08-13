@@ -17,7 +17,7 @@ class composer::params {
       $composer_file   = 'composer'
       $download_method = 'curl'
       $logoutput       = false
-      $tmp_path        = '/home/vagrant'
+      $tmp_path        = '/tmp'
       $php_package     = 'php5-cli'
     }
     default: {
