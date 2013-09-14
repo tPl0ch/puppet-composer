@@ -31,11 +31,11 @@ define composer::exec (
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}" }
 
   if $cmd != 'install' and $cmd != 'update' {
-    fail("Only types 'install' and 'update' are allowed, $type given")
+    fail("Only types 'install' and 'update' are allowed, ${cmd} given")
   }
 
   if $prefer_source and $prefer_dist {
-    fail("Only one of \$prefer_source or \$prefer_dist can be true.")
+    fail('Only one of \$prefer_source or \$prefer_dist can be true.')
   }
 
   $command = "php ${composer::target_dir}/${composer::composer_file} ${cmd}"

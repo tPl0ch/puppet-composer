@@ -36,11 +36,11 @@
 define composer::project(
   $project_name,
   $target_dir,
-  $version        = 'UNSET',
+  $version        = undef,
   $dev            = false,
   $prefer_source  = false,
   $stability      = 'dev',
-  $repository_url = 'UNSET',
+  $repository_url = undef,
   $keep_vcs       = false,
   $tries          = 3,
   $timeout        = 1200
@@ -54,40 +54,35 @@ define composer::project(
   $base_command = "php ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
   $end_command  = "${project_name} ${target_dir}"
 
-  if $dev {
-    $dev_arg = " --dev"
-  } else {
-    $dev_arg = ""
+  $dev_arg = $dev ? {
+    true    => ' --dev',
+    default => '',
   }
 
-  if $keep_vcs {
-    $vcs = " --keep-vcs"
-  } else {
-    $vcs = ""
+  $vcs = $keep_vcs? {
+    true    => ' --keep-vcs',
+    default => '',
   }
 
-  if $repository_url != 'UNSET' {
-    $repo = " --repository-url=${repository_url}"
-  } else {
-    $repo = ""
+  $repo = $repository_url? {
+    undef   => '',
+    default => " --repository-url=${repository_url}",
   }
 
-  if $prefer_source {
-    $pref_src = " --prefer-source"
-  } else {
-    $pref_src = ""
+  $pref_src = $prefer_source? {
+    true  => ' --prefer-source',
+    false => ''
   }
 
-  if $version != 'UNSET' {
-    $v = " ${version}"
-  } else {
-    $v = ""
+  $v = $version? {
+    undef   => '',
+    default => " ${version}",
   }
 
   exec { $exec_name:
     command => "${base_command}${dev_arg}${repo}${pref_src}${vcs} create-project ${end_command}${v}",
     tries   => $tries,
     timeout => $timeout,
-    unless  => "test -d ${target_dir}",
+    creates => $target_dir,
   }
 }
