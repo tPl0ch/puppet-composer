@@ -17,10 +17,10 @@ define composer::exec (
   $prefer_source     = false,
   $prefer_dist       = false,
   $dry_run           = false,
-  $no_custom_installers = true,
-  $no_scripts           = true,
+  $custom_installers = false,
+  $scripts           = false,
   $optimize          = false,
-  $no_interaction    = true,
+  $interaction       = false,
   $dev               = false,
   $logoutput         = false,
   $verbose           = false
