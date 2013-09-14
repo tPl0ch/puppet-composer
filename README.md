@@ -30,17 +30,20 @@ In your manifest.pp:
 
 In your manifest.pp:
 
+```puppet
     # configure composer install - not nessecary, comes with sane defaults
     class { 'composer':
         target_dir      => '/usr/local/bin',
         composer_file   => 'composer', # could also be 'composer.phar'
         download_method => 'curl', # or 'wget'
     }
+```
 
 #### Creating a project
 
 In your manifest.pp:
 
+```puppet
     # create a project
     composer::project { 'silex':
         project_name   => 'fabpot/silex-skeleton',  # REQUIRED
@@ -52,11 +55,13 @@ In your manifest.pp:
         dev            => true, # Install dev dependencies
         repository_url => 'http://repo.example.com' # Custom repository URL
     }
+```
 
 #### Updating a project / Updating package(s)
 
 In your manifest.pp:
 
+```puppet
     # update a project
     composer::exec { 'silex-update':
         cmd                  => 'update',  # REQUIRED
@@ -65,17 +70,19 @@ In your manifest.pp:
         prefer_source        => false, # Only one of prefer_source or prefer_dist can be true
         prefer_dist          => false, # Only one of prefer_source or prefer_dist can be true
         dry_run              => false, # Just simulate actions
-        no_custom_installers => false, # No custom installers
-        no_scripts           => false, # No script execution
-        no_interaction       => true, # No interactive questions
+        custom_installers    => false, # No custom installers
+        scripts              => false, # No script execution
+        interaction          => false, # No interactive questions
         optimize             => false, # Optimize autoloader
         dev                  => false, # Install dev dependencies
     }
+```
 
 #### Installing a project
 
 In your manifest.pp:
 
+```puppet
     # install a project - packages variable is ignored with 'install' cmd
     composer::exec { 'silex-install':
         cmd                  => 'install',  # REQUIRED
@@ -83,12 +90,13 @@ In your manifest.pp:
         prefer_source        => false,
         prefer_dist          => false,
         dry_run              => false, # Just simulate actions
-        no_custom_installers => false, # No custom installers
-        no_scripts           => false, # No script execution
-        no_interaction       => true, # No interactive questions
+        custom_installers    => false, # No custom installers
+        scripts              => false, # No script execution
+        interaction          => false, # No interactive questions
         optimize             => false, # Optimize autoloader
         dev                  => false, # Install dev dependencies
     }
+```
 
 ## TODO
 
