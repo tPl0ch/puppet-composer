@@ -38,7 +38,7 @@ class composer(
   $php_package     = $composer::params::php_package
 ) inherits composer::params {
 
-  Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:$target_dir" }
+  Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
 
   if defined(Package[$php_package]) == false {
     package { $php_package: ensure => present, }
@@ -58,7 +58,7 @@ class composer(
         Package['curl', $php_package],
         Augeas['allow_url_fopen', 'whitelist_phar'],
       ],
-      creates     => "$tmp_path/composer.phar",
+      creates     => "${tmp_path}/composer.phar",
       logoutput   => $logoutput,
     }
   }
@@ -75,23 +75,23 @@ class composer(
         Package['wget'],
         Augeas['allow_url_fopen', 'whitelist_phar'],
       ],
-      creates     => "$tmp_path/composer.phar",
+      creates     => "${tmp_path}/composer.phar",
       logoutput   => $logoutput,
     }
   }
   else {
-    fail("The param download_method $download_method is not valid. Please set download_method to curl or wget.")
+    fail("The param download_method ${download_method} is not valid. Please set download_method to curl or wget.")
   }
 
   # check if directory exists
   file { $target_dir:
-    ensure      => directory,
+    ensure => directory,
   }
 
   # move file to target_dir
-  file { "$target_dir/$composer_file":
-    ensure	=> present,
-    source      => "$tmp_path/composer.phar",
+  file { "${target_dir}/${composer_file}":
+    ensure      => present,
+    source      => "${tmp_path}/composer.phar",
     require     => [ Exec['download_composer'], File[$target_dir], ],
     #group	 => 'staff',
     mode        => '0755',
