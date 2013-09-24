@@ -13,13 +13,21 @@
 #
 class composer::params {
   case $::osfamily {
-    'Redhat','Centos','Debian': {
+    'Debian': {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
       $logoutput       = false
       $tmp_path        = '/tmp'
       $php_package     = 'php5-cli'
+    }
+    'RedHat', 'CentOS': {
+      $target_dir      = '/usr/local/bin'
+      $composer_file   = 'composer'
+      $download_method = 'curl'
+      $logoutput       = false
+      $tmp_path        = '/tmp'
+      $php_package     = 'php-cli'
     }
     default: {
       fail("Unsupported platform: ${::osfamily}")
