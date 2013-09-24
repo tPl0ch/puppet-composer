@@ -21,7 +21,7 @@ class composer::params {
       $tmp_path        = '/tmp'
       $php_package     = 'php5-cli'
     }
-    'RedHat', 'CentOS': {
+    'RedHat': {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
