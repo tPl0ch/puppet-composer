@@ -35,7 +35,9 @@ class composer(
   $download_method = $composer::params::download_method,
   $logoutput       = $composer::params::logoutput,
   $tmp_path        = $composer::params::tmp_path,
-  $php_package     = $composer::params::php_package
+  $php_package     = $composer::params::php_package,
+  $curl_package    = $composer::params::curl_package,
+  $wget_package    = $composer::params::wget_package,
 ) inherits composer::params {
 
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
@@ -45,42 +47,35 @@ class composer(
   }
 
   # download composer
-  if $download_method == 'curl' {
-
-    if defined(Package['curl']) == false {
-      package { 'curl': ensure => present, }
+  case $download_method {
+    'curl': {
+      $download_command = 'curl -s http://getcomposer.org/installer | php'
+      $download_require = [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'], ]
+      $method_package = $curl_package
     }
-
-    exec { 'download_composer':
-      command     => 'curl -s http://getcomposer.org/installer | php',
-      cwd         => $tmp_path,
-      require     => [
-        Package['curl', $php_package],
-        Augeas['allow_url_fopen', 'whitelist_phar'],
-      ],
-      creates     => "${tmp_path}/composer.phar",
-      logoutput   => $logoutput,
+    'wget': {
+      $download_command = 'wget http://getcomposer.org/composer.phar -O composer.phar'
+      $download_require = [ Package['wget'], Augeas['allow_url_fopen', 'whitelist_phar'], ]
+      $method_package = $wget_package
+    }
+    default: {
+      fail("The param download_method ${download_method} is not valid. Please set download_method to curl or wget.")
     }
   }
-  elsif $download_method == 'wget' {
 
-    if defined(Package['wget']) == false {
-      package {'wget': ensure => present, }
-    }
-
-    exec { 'download_composer':
-      command     => 'wget http://getcomposer.org/composer.phar -O composer.phar',
-      cwd         => $tmp_path,
-      require     => [
-        Package['wget'],
-        Augeas['allow_url_fopen', 'whitelist_phar'],
-      ],
-      creates     => "${tmp_path}/composer.phar",
-      logoutput   => $logoutput,
-    }
+  if defined(Package[$method_package]) == false {
+    package { $method_package: ensure => present, }
   }
-  else {
-    fail("The param download_method ${download_method} is not valid. Please set download_method to curl or wget.")
+
+  exec { 'download_composer':
+    command     => $download_command,
+    cwd         => $tmp_path,
+    require     => [
+      Package[$method_package, $php_package],
+      Augeas['allow_url_fopen', 'whitelist_phar'],
+    ],
+    creates     => "${tmp_path}/composer.phar",
+    logoutput   => $logoutput,
   }
 
   # check if directory exists
@@ -134,5 +129,4 @@ class composer(
 
     }
   }
-
 }
