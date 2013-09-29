@@ -48,7 +48,10 @@ define composer::project(
   require git
   require composer
 
-  Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}" }
+  Exec {
+    path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
+    environment => "COMPOSER_HOME=${composer::composer_home}",
+  }
 
   $exec_name    = "composer_create_project_${title}"
   $base_command = "php ${composer::target_dir}/${composer::composer_file} --stability=${stability}"

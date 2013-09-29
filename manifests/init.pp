@@ -38,6 +38,7 @@ class composer(
   $php_package     = $composer::params::php_package,
   $curl_package    = $composer::params::curl_package,
   $wget_package    = $composer::params::wget_package,
+  $composer_home   = $composer::params::composer_home,
 ) inherits composer::params {
 
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
