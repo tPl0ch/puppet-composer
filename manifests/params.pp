@@ -20,6 +20,8 @@ class composer::params {
       $logoutput       = false
       $tmp_path        = '/tmp'
       $php_package     = 'php5-cli'
+      $curl_package    = 'curl'
+      $wget_package    = 'wget'
     }
     'RedHat': {
       $target_dir      = '/usr/local/bin'
@@ -28,6 +30,8 @@ class composer::params {
       $logoutput       = false
       $tmp_path        = '/tmp'
       $php_package     = 'php-cli'
+      $curl_package    = 'curl'
+      $wget_package    = 'wget'
     }
     default: {
       fail("Unsupported platform: ${::osfamily}")
