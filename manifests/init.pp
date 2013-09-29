@@ -25,6 +25,19 @@
 # [*php_package*]
 #   The Package name of tht PHP CLI package.
 #
+# [*curl_package*]
+#   The name of the curl package to override the default set in the
+#   composer::params class.
+#
+# [*wget_package*]
+#   The name of the wget package to override the default set in the
+#   composer::params class.
+#
+# [*composer_home*]
+#   Folder to use as the COMPOSER_HOME environment variable. Default comes
+#   from our composer::params class which derives from our own $composer_home
+#   fact. The fact returns the current users $HOME environment variable.
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
