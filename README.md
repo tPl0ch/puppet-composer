@@ -28,14 +28,20 @@ In your manifest.pp:
 
 #### Configuring the composer install
 
-In your manifest.pp:
+This example includes all available class parameters. In your manifest.pp:
 
 ```puppet
     # configure composer install - not nessecary, comes with sane defaults
     class { 'composer':
         target_dir      => '/usr/local/bin',
         composer_file   => 'composer', # could also be 'composer.phar'
-        download_method => 'curl', # or 'wget'
+        download_method => 'curl',     # or 'wget'
+        logoutput       => false,
+        tmp_path        => '/tmp',
+        php_package     => 'php5-cli',
+        curl_package    => 'curl',
+        wget_package    => 'wget',
+        composer_home   => '/root',
     }
 ```
 
