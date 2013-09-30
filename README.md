@@ -1,5 +1,7 @@
 # Puppet module to install composer
 
+[![Build Status](https://travis-ci.org/tPl0ch/puppet-composer.png?branch=master)](https://travis-ci.org/tPl0ch/puppet-composer)
+
 ## Description
 
 install php composer - from http://getcomposer.org/ with puppet-composer module
