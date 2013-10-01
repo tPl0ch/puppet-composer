@@ -12,6 +12,8 @@
 # Copyright 2013 Thomas Ploch
 #
 class composer::params {
+  $composer_home = $::composer_home
+
   case $::osfamily {
     'Debian': {
       $target_dir      = '/usr/local/bin'

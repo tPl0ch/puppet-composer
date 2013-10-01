@@ -25,6 +25,19 @@
 # [*php_package*]
 #   The Package name of tht PHP CLI package.
 #
+# [*curl_package*]
+#   The name of the curl package to override the default set in the
+#   composer::params class.
+#
+# [*wget_package*]
+#   The name of the wget package to override the default set in the
+#   composer::params class.
+#
+# [*composer_home*]
+#   Folder to use as the COMPOSER_HOME environment variable. Default comes
+#   from our composer::params class which derives from our own $composer_home
+#   fact. The fact returns the current users $HOME environment variable.
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -38,6 +51,7 @@ class composer(
   $php_package     = $composer::params::php_package,
   $curl_package    = $composer::params::curl_package,
   $wget_package    = $composer::params::wget_package,
+  $composer_home   = $composer::params::composer_home,
 ) inherits composer::params {
 
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
