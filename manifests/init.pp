@@ -57,7 +57,7 @@ class composer(
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
 
   if defined(Package[$php_package]) == false {
-    package { $php_package: ensure => present, }
+    ensure_packages( [$php_package] )
   }
 
   # download composer
@@ -78,7 +78,7 @@ class composer(
   }
 
   if defined(Package[$method_package]) == false {
-    package { $method_package: ensure => present, }
+    ensure_packages( [$method_package] )
   }
 
   exec { 'download_composer':
