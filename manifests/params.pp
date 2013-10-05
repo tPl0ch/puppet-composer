@@ -24,6 +24,7 @@ class composer::params {
       $php_package     = 'php5-cli'
       $curl_package    = 'curl'
       $wget_package    = 'wget'
+      $suhosin_enabled = true
     }
     'RedHat': {
       $target_dir      = '/usr/local/bin'
@@ -34,6 +35,7 @@ class composer::params {
       $php_package     = 'php-cli'
       $curl_package    = 'curl'
       $wget_package    = 'wget'
+      $suhosin_enabled = true
     }
     default: {
       fail("Unsupported platform: ${::osfamily}")

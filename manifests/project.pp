@@ -23,7 +23,7 @@
 #   Where the composer.phar file should be temporarily put.
 #
 # [*php_package*]
-#   The Package name of tht PHP CLI package.
+#   The Package name of the PHP CLI package.
 #
 # === Authors
 #
