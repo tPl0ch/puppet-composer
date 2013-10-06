@@ -25,6 +25,7 @@ define composer::exec (
   $logoutput         = false,
   $verbose           = false,
   $refreshonly       = false,
+  $user              = undef,
 ) {
   require composer
   require git
@@ -32,6 +33,7 @@ define composer::exec (
   Exec {
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
     environment => "COMPOSER_HOME=${composer::composer_home}",
+    user        => $user,
   }
 
   if $cmd != 'install' and $cmd != 'update' {

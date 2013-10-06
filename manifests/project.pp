@@ -25,6 +25,9 @@
 # [*php_package*]
 #   The Package name of the PHP CLI package.
 #
+# [*user*]
+#   The user name to exec the composer commands as. Default is undefined.
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -43,7 +46,8 @@ define composer::project(
   $repository_url = undef,
   $keep_vcs       = false,
   $tries          = 3,
-  $timeout        = 1200
+  $timeout        = 1200,
+  $user           = undef,
 ) {
   require git
   require composer
@@ -51,6 +55,7 @@ define composer::project(
   Exec {
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
     environment => "COMPOSER_HOME=${composer::composer_home}",
+    user        => $user,
   }
 
   $exec_name    = "composer_create_project_${title}"
