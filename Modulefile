@@ -1,5 +1,5 @@
 name 'tPl0ch-composer'
-version '1.0.0'
+version '1.0.1'
 dependency 'puppetlabs/git', '0.0.2'
 summary "This module provides the 'Composer' PHP dependency manager."
 description "This module installs the 'Composer' PHP dependency manager and provides some custom types to create, update
