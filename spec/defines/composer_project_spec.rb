@@ -18,7 +18,7 @@ describe 'composer::project' do
         it { should include_class('composer') }
 
         it {
-          should contain_exec('composer_create_project_myproject').with({
+          should contain_exec('composer_create_project_myproject').without_user.with({
             :command => "php /usr/local/bin/composer --stability=dev create-project projectzzz /my/subpar/project",
             :tries   => 3,
             :timeout => 1200,
@@ -39,7 +39,8 @@ describe 'composer::project' do
           :repository_url => 'git@github.com:trollface/whoadawg.git',
           :keep_vcs       => true,
           :tries          => 2,
-          :timeout        => 600
+          :timeout        => 600,
+          :user           => 'mrploch',
         } }
 
         it { should include_class('git') }
@@ -51,6 +52,7 @@ describe 'composer::project' do
             :tries   => 2,
             :timeout => 600,
             :creates => '/my/mediocre/project',
+            :user    => 'mrploch',
           })
         }
       end
