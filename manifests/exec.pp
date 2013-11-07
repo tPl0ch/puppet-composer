@@ -23,7 +23,8 @@ define composer::exec (
   $interaction       = false,
   $dev               = false,
   $logoutput         = false,
-  $verbose           = false
+  $verbose           = false,
+  $refreshonly       = false,
 ) {
   require composer
   require git
@@ -44,8 +45,9 @@ define composer::exec (
   $command = "php ${composer::target_dir}/${composer::composer_file} ${cmd}"
 
   exec { "composer_update_${title}":
-    command   => template('composer/exec.erb'),
-    cwd       => $cwd,
-    logoutput => $logoutput,
+    command     => template('composer/exec.erb'),
+    cwd         => $cwd,
+    logoutput   => $logoutput,
+    refreshonly => $refreshonly
   }
 }
