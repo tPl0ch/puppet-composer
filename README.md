@@ -63,7 +63,8 @@ composer::project { 'silex':
     stability      => 'dev', # Minimum stability setting
     keep_vcs       => false, # Keep the VCS information
     dev            => true, # Install dev dependencies
-    repository_url => 'http://repo.example.com' # Custom repository URL
+    repository_url => 'http://repo.example.com', # Custom repository URL
+    user           => undef, # Set the user to run as
 }
 ```
 
@@ -84,6 +85,8 @@ composer::exec { 'silex-update':
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
     dev                  => false, # Install dev dependencies
+    user                 => undef, # Set the user to run as
+    refreshonly          => false, # Only run on refresh
 }
 ```
 
