@@ -84,8 +84,10 @@ class composer(
   }
 
   # check if directory exists
-  file { $target_dir:
-    ensure => directory,
+  if defined(File[$target_dir]) == false {
+    file { $target_dir:
+      ensure => directory,
+    }
   }
 
   # move file to target_dir
@@ -98,41 +100,43 @@ class composer(
   }
 
   case $::osfamily {
-
     'Redhat','Centos': {
-
       # set /etc/php5/cli/php.ini/suhosin.executor.include.whitelist = phar
-      augeas { 'whitelist_phar':
-        context     => '/files/etc/suhosin.ini/suhosin',
-        changes     => 'set suhosin.executor.include.whitelist phar',
-        require     => Package[$php_package],
+      if defined(augeas['whitelist_phar']) == false {
+        augeas { 'whitelist_phar':
+          context     => '/files/etc/suhosin.ini/suhosin',
+          changes     => 'set suhosin.executor.include.whitelist phar',
+          require     => Package[$php_package],
+        }
       }
 
       # set /etc/cli/php.ini/PHP/allow_url_fopen = On
-      augeas{ 'allow_url_fopen':
-        context     => '/files/etc/php.ini/PHP',
-        changes     => 'set allow_url_fopen On',
-        require     => Package[$php_package],
+      if defined(augeas['allow_url_fopen']) == false {
+        augeas { 'allow_url_fopen':
+          context     => '/files/etc/php.ini/PHP',
+          changes     => 'set allow_url_fopen On',
+          require     => Package[$php_package],
+        }
       }
-
     }
    'Debian': {
-
       # set /etc/php5/cli/php.ini/suhosin.executor.include.whitelist = phar
-      augeas { 'whitelist_phar':
-        context     => '/files/etc/php5/conf.d/suhosin.ini/suhosin',
-        changes     => 'set suhosin.executor.include.whitelist phar',
-        require     => Package[$php_package],
+      if defined(augeas['whitelist_phar']) == false {
+        augeas { 'whitelist_phar':
+          context     => '/files/etc/php5/conf.d/suhosin.ini/suhosin',
+          changes     => 'set suhosin.executor.include.whitelist phar',
+          require     => Package[$php_package],
+        }
       }
 
       # set /etc/php5/cli/php.ini/PHP/allow_url_fopen = On
-      augeas{ 'allow_url_fopen':
-        context     => '/files/etc/php5/cli/php.ini/PHP',
-        changes     => 'set allow_url_fopen On',
-        require     => Package[$php_package],
+      if defined(augeas['allow_url_fopen']) == false {
+        augeas { 'allow_url_fopen':
+          context     => '/files/etc/php5/cli/php.ini/PHP',
+          changes     => 'set allow_url_fopen On',
+          require     => Package[$php_package],
+        }
       }
-
     }
   }
-
 }
