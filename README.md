@@ -24,6 +24,10 @@ This module requires the following Puppet modules:
 
 * [`puppetlabs-git`](https://github.com/puppetlabs/puppetlabs-git/)
 
+And additional (for puppet version lower than 3.0.0) you need:
+
+* [`libaugeas`](http://augeas.net/) (For automatically updating php.ini settings for suhosin patch)
+
 ## Usage
 To install the `composer` binary globally in `/usr/local/bin` you only need to declare the `composer` class. We try to set some sane defaults. There are also a number of parameters you can tweak should the defaults not be sufficient.
 
@@ -46,6 +50,7 @@ class { 'composer':
     curl_package    => 'curl',
     wget_package    => 'wget',
     composer_home   => '/root',
+    php_bin         => 'php', # could also i.e. be 'php -d "apc.enable_cli=0"' for more fine grained control
     suhosin_enable  => true,
 }
 ```
@@ -92,7 +97,7 @@ composer::exec { 'silex-update':
 
 #### Installing Packages
 
-We support the `install` command in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivilent to running `composer install` in the `/vagrant/silex` directory.
+We support the `install` command in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivalent to running `composer install` in the `/vagrant/silex` directory.
 
 ```puppet
 composer::exec { 'silex-install':
@@ -140,4 +145,4 @@ We welcome everyone to help develop this module. To contribute:
 
 ## Todo
 
-* Add a 'composer::require' type
+* Add a `composer::require` type
