@@ -1,3 +1,23 @@
+v1.2.0
+======
+66b071a (HEAD, tag: 1.2.0, master) Bumping version to 1.2.0
+
+166ec87 Updated README.md
+
+626ee43 (origin/master, origin/HEAD) Updated CHANGELOG format
+
+1364058 Moved CHANGELOG to markdown format
+
+6f21dcb Updated LICENSE file
+
+6209eb8 Added CHANGELOG file
+
+6307d5a Add parameter 'php_bin' to override name or path of php binary
+
+9e484e9 (origin/rspec_head_fixes, rspec_head_fixes) just match on errorname, not specific exception
+
+db4176e update specs for latest rspec-puppet 1.0.1+
+
 v1.1.1
 ======
 17b2309 (tag: 1.1.1) Update Modulefile
