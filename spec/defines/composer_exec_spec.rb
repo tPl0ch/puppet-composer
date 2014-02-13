@@ -59,7 +59,7 @@ describe 'composer::exec' do
     let(:title) { 'someproject' }
 
     it 'should not compile' do
-      expect { should compile }.to raise_error(Puppet::Error, /Unsupported platform: Darwin/)
+      expect { should compile }.to raise_error(/Unsupported platform: Darwin/)
     end
   end
 end
