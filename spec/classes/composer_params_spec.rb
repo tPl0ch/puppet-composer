@@ -7,7 +7,7 @@ describe 'composer::params' do
         :osfamily => osfamily,
       } }
 
-      it { catalogue }
+      it { should compile }
     end
   end
 end
