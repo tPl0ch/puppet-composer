@@ -8,8 +8,8 @@ describe 'composer::exec' do
       } }
 
       context 'using install command' do
-        it { should include_class('git') }
-        it { should include_class('composer') }
+        it { should contain_class('git') }
+        it { should contain_class('composer') }
 
         let(:title) { 'myproject' }
         let(:params) { {
@@ -29,8 +29,8 @@ describe 'composer::exec' do
       end
 
       context 'using update command' do
-        it { should include_class('git') }
-        it { should include_class('composer') }
+        it { should contain_class('git') }
+        it { should contain_class('composer') }
 
         let(:title) { 'yourpr0ject' }
         let(:params) { {
@@ -59,7 +59,7 @@ describe 'composer::exec' do
     let(:title) { 'someproject' }
 
     it do
-      expect { catalogue }.to raise_error(Puppet::Error, /Unsupported platform: Darwin/)
+      expect { should compile }.to raise_error(Puppet::Error, /Unsupported platform: Darwin/)
     end
   end
 end
