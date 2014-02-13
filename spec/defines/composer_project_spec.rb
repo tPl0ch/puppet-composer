@@ -14,8 +14,8 @@ describe 'composer::project' do
           :target_dir   => '/my/subpar/project',
         } }
 
-        it { should include_class('git') }
-        it { should include_class('composer') }
+        it { should contain_class('git') }
+        it { should contain_class('composer') }
 
         it {
           should contain_exec('composer_create_project_myproject').without_user.with({
@@ -43,8 +43,8 @@ describe 'composer::project' do
           :user           => 'mrploch',
         } }
 
-        it { should include_class('git') }
-        it { should include_class('composer') }
+        it { should contain_class('git') }
+        it { should contain_class('composer') }
 
         it {
           should contain_exec('composer_create_project_whoadawg').with({

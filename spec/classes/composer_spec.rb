@@ -22,7 +22,7 @@ describe 'composer' do
           :osfamily => osfamily,
       } }
 
-      it { should include_class('composer::params') }
+      it { should contain_class('composer::params') }
 
       it {
         should contain_exec('download_composer').with({
@@ -49,7 +49,7 @@ describe 'composer' do
 
       context 'with default parameters' do
         it 'should compile' do
-          catalogue
+          compile
         end
 
         it { should contain_package(php_package).with_ensure('present') }
@@ -75,7 +75,7 @@ describe 'composer' do
         } }
 
         it 'should compile' do
-          catalogue
+          compile
         end
 
         it { should contain_package('php8-cli').with_ensure('present') }
