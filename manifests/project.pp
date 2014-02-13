@@ -59,7 +59,7 @@ define composer::project(
   }
 
   $exec_name    = "composer_create_project_${title}"
-  $base_command = "php ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
+  $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
   $end_command  = "${project_name} ${target_dir}"
 
   $dev_arg = $dev ? {

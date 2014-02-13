@@ -71,6 +71,7 @@ describe 'composer' do
           :php_package     => 'php8-cli',
           :composer_file   => 'compozah',
           :curl_package    => 'kerl',
+          :php_bin         => 'pehpe',
           :suhosin_enabled => false,
         } }
 

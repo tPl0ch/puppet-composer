@@ -38,6 +38,10 @@
 #   from our composer::params class which derives from our own $composer_home
 #   fact. The fact returns the current users $HOME environment variable.
 #
+# [*php_bin*]
+#   The name or path of the php binary to override the default set in the
+#   composer::params class.
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -52,6 +56,7 @@ class composer(
   $curl_package    = $composer::params::curl_package,
   $wget_package    = $composer::params::wget_package,
   $composer_home   = $composer::params::composer_home,
+  $php_bin         = $composer::params::php_bin,
   $suhosin_enabled = $composer::params::suhosin_enabled
 ) inherits composer::params {
 
@@ -64,7 +69,7 @@ class composer(
   # download composer
   case $download_method {
     'curl': {
-      $download_command = 'curl -s http://getcomposer.org/installer | php'
+      $download_command = "curl -s http://getcomposer.org/installer | ${composer::php_bin}"
       $download_require = $suhosin_enabled ? {
         true  => [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
         false => [ Package['curl', $php_package] ]
