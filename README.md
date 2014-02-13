@@ -46,7 +46,7 @@ class { 'composer':
     curl_package    => 'curl',
     wget_package    => 'wget',
     composer_home   => '/root',
-    suhosin_enable  => true,
+    suhosin_enabled => true,
 }
 ```
 
