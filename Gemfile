@@ -12,6 +12,6 @@ ruby '1.9.3'
 
 gem 'puppet', puppetversion
 gem 'puppetlabs_spec_helper'
-gem 'rspec-puppet'
+gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git', :branch => 'master'
 gem 'mocha'
 gem 'puppet-lint'
