@@ -14,7 +14,14 @@
 class composer::params {
   $composer_home = $::composer_home
 
-  case $::osfamily {
+  # Support Amazon Linux which is supported by RedHat family
+  if $::osfamily == 'Linux' and $::operatingsystem == 'Amazon' {
+    $family = 'RedHat'
+  } else {
+    $family = $::osfamily
+  }
+
+  case $family {
     'Debian': {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
@@ -27,7 +34,7 @@ class composer::params {
       $php_bin         = 'php'
       $suhosin_enabled = true
     }
-    'RedHat': {
+    'RedHat', 'Centos': {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
@@ -40,7 +47,7 @@ class composer::params {
       $suhosin_enabled = true
     }
     default: {
-      fail("Unsupported platform: ${::osfamily}")
+      fail("Unsupported platform: ${family}")
     }
   }
 }

@@ -1,9 +1,13 @@
 require 'spec_helper'
 
 describe 'composer' do
-  ['RedHat', 'Debian'].each do |osfamily|
+  ['RedHat', 'Debian', 'Linux'].each do |osfamily|
     case osfamily
     when 'RedHat'
+      php_package = 'php-cli'
+      php_context = '/files/etc/php.ini/PHP'
+      suhosin_context = '/files/etc/suhosin.ini/suhosin'
+    when 'Linux'
       php_package = 'php-cli'
       php_context = '/files/etc/php.ini/PHP'
       suhosin_context = '/files/etc/suhosin.ini/suhosin'
@@ -19,7 +23,8 @@ describe 'composer' do
 
     context "on #{osfamily} operating system family" do
       let(:facts) { {
-          :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :operatingsystem => 'Amazon'
       } }
 
       it { should contain_class('composer::params') }
@@ -63,6 +68,17 @@ describe 'composer' do
             :mode   => '0755',
           })
         }
+      end
+
+      context "on invalid operating system family" do
+        let(:facts) { {
+          :osfamily        => 'Invalid',
+          :operatingsystem => 'Amazon'
+        } }
+
+        it 'should not compile' do
+          expect { should compile }.to raise_error(/Unsupported platform: Invalid/)
+        end
       end
 
       context 'with custom parameters' do

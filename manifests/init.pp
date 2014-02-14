@@ -115,7 +115,7 @@ class composer(
   }
 
   if $suhosin_enabled {
-    case $::osfamily {
+    case $family {
 
       'Redhat','Centos': {
 

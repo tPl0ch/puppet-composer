@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe 'composer::params' do
-  ['RedHat', 'Debian'].each do |osfamily|
+  ['RedHat', 'Debian', 'Linux'].each do |osfamily|
     context "on #{osfamily} operating system family" do
       let(:facts) { {
-        :osfamily => osfamily,
+        :osfamily        => osfamily,
+        :operatingsystem => 'Amazon',
       } }
 
       it { should compile }
