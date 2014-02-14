@@ -51,7 +51,7 @@ class { 'composer':
     wget_package    => 'wget',
     composer_home   => '/root',
     php_bin         => 'php', # could also i.e. be 'php -d "apc.enable_cli=0"' for more fine grained control
-    suhosin_enable  => true,
+    suhosin_enabled => true,
 }
 ```
 
