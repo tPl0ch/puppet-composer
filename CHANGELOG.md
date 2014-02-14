@@ -1,3 +1,9 @@
+v1.2.1
+======
+f44b7e5 Now also supports Amazon Linux (RedHat)
+
+9341805 Now `suhosin_enabled` parameter is correctly documented.
+
 v1.2.0
 ======
 66b071a (HEAD, tag: 1.2.0, master) Bumping version to 1.2.0

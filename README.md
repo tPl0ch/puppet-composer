@@ -6,6 +6,13 @@
 
 The `puppet-composer` module installs the latest version of Composer from http://getcomposer.org. Composer is a dependency manager for PHP.
 
+## Supported Platforms
+
+* `Debian`
+* `Redhat`
+* `Centos`
+* `Amazon Linux`
+
 ## Installation
 
 #### Puppet Forge
