@@ -6,6 +6,10 @@
 
 The `puppet-composer` module installs the latest version of Composer from http://getcomposer.org. Composer is a dependency manager for PHP.
 
+## Supported Puppet versions
+
+This module supports puppet in versions `>= 2.7, <3.5`
+
 ## Supported Platforms
 
 * `Debian`
@@ -60,6 +64,7 @@ class { 'composer':
     composer_home   => '/root',
     php_bin         => 'php', # could also i.e. be 'php -d "apc.enable_cli=0"' for more fine grained control
     suhosin_enabled => true,
+    auto_update     => false, # Set to true to automatically update composer to the latest version
 }
 ```
 
@@ -81,7 +86,7 @@ composer::project { 'silex':
 }
 ```
 
-#### Updating Packages
+### Updating Packages
 
 The `composer::exec` definition provides a more generic wrapper arround composer `update` and `install` commands. The following example will update the `silex/silex` and `symfony/browser-kit` packages in the `/vagrant/silex` directory. You can omit `packages` to update the entire project.
 
@@ -97,13 +102,13 @@ composer::exec { 'silex-update':
     scripts              => false, # No script execution
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
-    dev                  => false, # Install dev dependencies
+    dev                  => true, # Install dev dependencies
     user                 => undef, # Set the user to run as
     refreshonly          => false, # Only run on refresh
 }
 ```
 
-#### Installing Packages
+### Installing Packages
 
 We support the `install` command in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivalent to running `composer install` in the `/vagrant/silex` directory.
 
@@ -118,7 +123,23 @@ composer::exec { 'silex-install':
     scripts              => false, # No script execution
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
-    dev                  => false, # Install dev dependencies
+    dev                  => true, # Install dev dependencies 
+}
+```
+
+### Updating composer
+
+You can use the defined type `composer::selfupdate` to update (or rollback) composer to the latest (or specific) version.
+
+```puppet
+composer::selfupdate { 'selfupdate_composer':
+  version       => undef, # Leave undef for latest version, otherwise specify commit hash here
+  rollback      => false, # Set to true to rollback to a specified version (version MUST be given)
+  clean_backups => false, # Set to true to clean backups
+  user          => undef, # If the command should be run as a user
+  logoutput     => false, # If the command's output should be written to the logs
+  timeout       => 300,   # Timeout for this command
+  tries         => 3,     # Retries for this command
 }
 ```
 
