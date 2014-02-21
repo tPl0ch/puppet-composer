@@ -9,6 +9,7 @@ The `puppet-composer` module installs the latest version of Composer from http:/
 ## Supported Platforms
 
 * `Debian`
+* `Ubuntu`
 * `Redhat`
 * `Centos`
 * `Amazon Linux`
