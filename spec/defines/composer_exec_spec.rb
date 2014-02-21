@@ -9,6 +9,7 @@ describe 'composer::exec' do
 
       context 'using install command' do
         it { should contain_class('git') }
+        it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         let(:title) { 'myproject' }
@@ -30,6 +31,7 @@ describe 'composer::exec' do
 
       context 'using update command' do
         it { should contain_class('git') }
+        it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         let(:title) { 'yourpr0ject' }
@@ -42,7 +44,7 @@ describe 'composer::exec' do
 
         it {
           should contain_exec('composer_update_yourpr0ject').without_user.with({
-            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction         package1         packageinf},
+            :command   => 'php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction package1 packageinf',
             :cwd       => '/just/in/time',
             :logoutput => true,
           })

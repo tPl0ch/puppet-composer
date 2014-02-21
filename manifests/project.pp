@@ -6,14 +6,16 @@
 #
 # Document parameters here.
 #
+# [*project_name*]
+#   The project name as required by composer
+#
 # [*target_dir*]
-#   The target dir that composer should be installed to.
-#   Defaults to ```/usr/local/bin```.
+#   The target dir that the project should be installed to
 #
-# [*composer_file*]
-#   The name of the composer binary, which will reside in ```target_dir```.
+# [*version*]
+#   The version of the composer project that should be checked out
 #
-# [*download_method*]
+# [*dev*]
 #   Either ```curl``` or ```wget```.
 #
 # [*logoutput*]
@@ -40,7 +42,7 @@ define composer::project(
   $project_name,
   $target_dir,
   $version        = undef,
-  $dev            = false,
+  $dev            = true,
   $prefer_source  = false,
   $stability      = 'dev',
   $repository_url = undef,
@@ -49,8 +51,7 @@ define composer::project(
   $timeout        = 1200,
   $user           = undef,
 ) {
-  require git
-  require composer
+  require ::composer
 
   Exec {
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
@@ -63,8 +64,8 @@ define composer::project(
   $end_command  = "${project_name} ${target_dir}"
 
   $dev_arg = $dev ? {
-    true    => ' --dev',
-    default => '',
+    true    => '',
+    default => ' --no-dev',
   }
 
   $vcs = $keep_vcs? {
@@ -78,8 +79,8 @@ define composer::project(
   }
 
   $pref_src = $prefer_source? {
-    true  => ' --prefer-source',
-    false => ''
+    true    => ' --prefer-source',
+    default => ''
   }
 
   $v = $version? {
