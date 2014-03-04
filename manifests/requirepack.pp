@@ -47,7 +47,7 @@ define composer::requirepack (
     $global_opt = ''
   }
 
-  $command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} ${global_opt} require"
+  $command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} ${global_opt} require ${project_name}"
   notify {$command:}
 
   exec { "composer_update_${title}":
