@@ -60,7 +60,7 @@ define composer::require(
 
   $exec_name    = "composer_require_project_${title}"
   $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file}"
-  $end_command  = "${project_name} ${target_dir}"
+  $end_command  = "${project_name}"
 
   $dev_arg = $dev ? {
     true    => ' --dev',
