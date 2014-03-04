@@ -59,7 +59,7 @@ define composer::require(
     user        => $user,
   }
 
-  $exec_name    = "composer_create_project_${title}"
+  $exec_name    = "composer_require_project_${title}"
   $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
   $end_command  = "${project_name} ${target_dir}"
 
@@ -92,6 +92,8 @@ define composer::require(
     true => 'global',
     false => '',
   }
+
+  notify {"${base_command}${dev_arg}${repo}${pref_src}${vcs} ${global_opt} require ${end_command}${v}":}
 
   exec { $exec_name:
     command => "${base_command}${dev_arg}${repo}${pref_src}${vcs} ${global_opt} require ${end_command}${v}",
