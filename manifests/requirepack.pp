@@ -13,9 +13,10 @@
 # Copyright 2013 Thomas Ploch
 #
 define composer::requirepack (
+  $project_name,
   $cwd,
-  $global            = false,
   $packages          = [],
+  $global            = false,
   $prefer_source     = false,
   $update            = false,
   $progress          = false,
@@ -47,6 +48,7 @@ define composer::requirepack (
   }
 
   $command = "${composer::php_bin} ${global_opt} require ${composer::target_dir}/${composer::composer_file}"
+  notify {$command:}
 
   exec { "composer_update_${title}":
     command     => template('composer/exec.erb'),
