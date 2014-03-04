@@ -43,7 +43,6 @@ define composer::require(
   $global         = false,
   $dev            = false,
   $prefer_source  = false,
-  $stability      = 'dev',
   $repository_url = undef,
   $keep_vcs       = false,
   $tries          = 3,
@@ -60,7 +59,7 @@ define composer::require(
   }
 
   $exec_name    = "composer_require_project_${title}"
-  $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
+  $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file}"
   $end_command  = "${project_name} ${target_dir}"
 
   $dev_arg = $dev ? {
