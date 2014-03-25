@@ -3,3 +3,5 @@ spec/fixtures/modules/*
 vendor/
 Gemfile.lock
 pkg/
+modules/
+
