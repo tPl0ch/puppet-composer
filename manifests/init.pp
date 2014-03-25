@@ -71,16 +71,16 @@ class composer(
     'curl': {
       $download_command = "curl -s http://getcomposer.org/installer | ${composer::php_bin}"
       $download_require = $suhosin_enabled ? {
-        true  => [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
-        false => [ Package['curl', $php_package] ]
+        true    => [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
+        default => [ Package['curl', $php_package] ]
       }
       $method_package = $curl_package
     }
     'wget': {
       $download_command = 'wget http://getcomposer.org/composer.phar -O composer.phar'
       $download_require = $suhosin_enabled ? {
-        true  => [ Package['wget', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
-        false => [ Package['wget', $php_package] ]
+        true    => [ Package['wget', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
+        default => [ Package['wget', $php_package] ]
       }
       $method_package = $wget_package
     }
@@ -114,7 +114,7 @@ class composer(
     mode    => 0755,
   }
 
-  if $suhosin_enabled {
+  if $suhosin_enabled == true {
     case $family {
 
       'Redhat','Centos': {
@@ -132,8 +132,8 @@ class composer(
           changes     => 'set allow_url_fopen On',
           require     => Package[$php_package],
         }
-
       }
+
      'Debian': {
 
         # set /etc/php5/cli/php.ini/suhosin.executor.include.whitelist = phar
@@ -144,12 +144,11 @@ class composer(
         }
 
         # set /etc/php5/cli/php.ini/PHP/allow_url_fopen = On
-        augeas{ 'allow_url_fopen':
+        augeas { 'allow_url_fopen':
           context     => '/files/etc/php5/cli/php.ini/PHP',
           changes     => 'set allow_url_fopen On',
           require     => Package[$php_package],
         }
-
       }
     }
   }
