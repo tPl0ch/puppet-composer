@@ -29,6 +29,7 @@ define composer::exec (
   $verbose                  = false,
   $refreshonly              = false,
   $lock                     = false,
+  $timeout                  = undef,
   $user                     = undef,
   $global                   = false,
 ) {
@@ -42,6 +43,7 @@ define composer::exec (
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
     environment => "COMPOSER_HOME=${composer::composer_home}",
     user        => $user,
+    timeout     => $timeout
   }
 
   if $cmd != 'install' and $cmd != 'update' and $cmd != 'require' {

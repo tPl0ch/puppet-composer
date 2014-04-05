@@ -14,9 +14,10 @@ describe 'composer::exec' do
 
         let(:title) { 'myproject' }
         let(:params) { {
-          :cmd  => 'install',
-          :cwd  => '/my/awesome/project',
-          :user => 'linus',
+          :cmd     => 'install',
+          :cwd     => '/my/awesome/project',
+          :user    => 'linus',
+          :timeout => 1267,
         } }
 
         it {
@@ -25,6 +26,7 @@ describe 'composer::exec' do
             :cwd       => '/my/awesome/project',
             :user      => 'linus',
             :logoutput => false,
+            :timeout   => 1267,
           })
         }
       end
@@ -43,8 +45,8 @@ describe 'composer::exec' do
         } }
 
         it {
-          should contain_exec('composer_update_yourpr0ject').without_user.with({
-            :command   => 'php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction package1 packageinf',
+          should contain_exec('composer_update_yourpr0ject').without_user.without_timeout.with({
+            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction             package1             packageinf},
             :cwd       => '/just/in/time',
             :logoutput => true,
           })
