@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant-root", "1"]
   end
 
-  config.vm.box = "puppetlabs/ubuntu-12.04-x86_64-puppet"
+  config.vm.box = "puppetlabs/ubuntu-12.04-64-puppet"
   config.vm.synced_folder "./", "/etc/puppet/modules/composer"
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path = "spec/fixtures/manifests"
