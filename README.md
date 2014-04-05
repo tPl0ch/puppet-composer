@@ -124,7 +124,11 @@ composer::exec { 'silex-install':
 
 ## Development
 
-We have `rspec-puppet` and Travis CI setup for the project. To run the spec tests locally you need `bundler` installed:
+For unit testing we use `rspec-puppet` and Travis CI. Functional testing happens through a Vagrant VM where you can test changes in a real server scenario.
+
+### Unit Tests
+
+When contributing fixes or features you should try and create RSpec tests for those changes. It is always a good idea to make sure the entire suite passes before opening a pull request. To run the RSpec tests locally you need `bundler` installed:
 
 ```
 gem install bundler
@@ -142,6 +146,18 @@ Finally, the tests can be run:
 rake spec
 ```
 
+### Functional Tests
+
+For easier development and actual testing the use of the module, we rely on Vagrant, which allows us to bring up a VM that we can use to test changes and perform active development without needing a real server.
+
+To get started with the Vagrant VM you should first get the [Unit Tests](#unit-tests) working. Then you will need to install [VirtualBox][virtualbox] and [Vagrant][vagrant].
+
+To bring up the development VM you can run `rake vagrant:up`. This Rake task runs `rake spec_prep` as a pre-requisite so that the `git` Puppet module is available. With the VM up and running you can login via SSH with `vagrant ssh` and run `puppet apply` against it with `rake vagrant:provision`.
+
+The VM will get the `spec/fixtures/manifests/vagrant.pp` file applied to the node. This currently creates a Silex project at `/tmp/silex` when the VM starts up. You can modify this manifest to your liking.
+
+Happy testing!
+
 ## Contributing
 
 We welcome everyone to help develop this module. To contribute:
@@ -154,3 +170,6 @@ We welcome everyone to help develop this module. To contribute:
 ## Todo
 
 * Add a `composer::require` type
+
+[vagrant]: http://vagrantup.com/
+[virtualbox]: https://www.virtualbox.org/wiki/Downloads
