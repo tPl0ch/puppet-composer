@@ -26,6 +26,7 @@ define composer::exec (
   $verbose           = false,
   $refreshonly       = false,
   $user              = undef,
+  $exec_timeout      = 300,
 ) {
   require composer
   require git
@@ -50,6 +51,7 @@ define composer::exec (
     command     => template('composer/exec.erb'),
     cwd         => $cwd,
     logoutput   => $logoutput,
-    refreshonly => $refreshonly
+    refreshonly => $refreshonly,
+    timeout     => $exec_timeout,
   }
 }
