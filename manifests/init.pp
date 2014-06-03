@@ -57,7 +57,8 @@ class composer(
   $wget_package    = $composer::params::wget_package,
   $composer_home   = $composer::params::composer_home,
   $php_bin         = $composer::params::php_bin,
-  $suhosin_enabled = $composer::params::suhosin_enabled
+  $suhosin_enabled = $composer::params::suhosin_enabled,
+  $projects        = hiera_hash('composer::projects', {}),
 ) inherits composer::params {
 
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
@@ -150,6 +151,12 @@ class composer(
           require     => Package[$php_package],
         }
       }
+    }
+  }
+
+  if $projects {
+    class {'composer::project_factory' :
+      projects => $projects,
     }
   }
 }

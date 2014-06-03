@@ -16,3 +16,5 @@ gem 'rspec-puppet', :github => 'rodjek/rspec-puppet', :ref => '03e94422fb9bbdd95
 gem 'rspec', '~> 2.99.0'
 gem 'mocha'
 gem 'puppet-lint'
+gem 'hiera'
+gem 'hiera-puppet'
