@@ -1,5 +1,6 @@
 fixtures:
   repositories:
     git: "git://github.com/puppetlabs/puppetlabs-git"
+    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
   symlinks:
     composer: "#{source_dir}"

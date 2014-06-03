@@ -86,7 +86,7 @@ describe 'composer' do
           :target_dir      => '/you_sir/lowcal/been',
           :php_package     => 'php8-cli',
           :composer_file   => 'compozah',
-          :curl_package    => 'kerl',
+          :method_package    => 'kerl',
           :php_bin         => 'pehpe',
           :suhosin_enabled => false,
         } }

@@ -26,11 +26,10 @@ class composer::params {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
+      $method_package  = $download_method
       $logoutput       = false
       $tmp_path        = '/tmp'
       $php_package     = 'php5-cli'
-      $curl_package    = 'curl'
-      $wget_package    = 'wget'
       $php_bin         = 'php'
       $suhosin_enabled = true
     }
@@ -38,11 +37,10 @@ class composer::params {
       $target_dir      = '/usr/local/bin'
       $composer_file   = 'composer'
       $download_method = 'curl'
+      $method_package  = $download_method
       $logoutput       = false
       $tmp_path        = '/tmp'
       $php_package     = 'php-cli'
-      $curl_package    = 'curl'
-      $wget_package    = 'wget'
       $php_bin         = 'php'
       $suhosin_enabled = true
     }
