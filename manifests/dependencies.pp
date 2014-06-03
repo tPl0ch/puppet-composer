@@ -26,7 +26,8 @@ class composer::dependencies(
   $download_method = $composer::params::download_method,
   $method_package  = $composer::params::method_package,
   $php_package     = $composer::params::php_package,
-  $suhosin_enabled = $composer::params::suhosin_enabled
+  $suhosin_enabled = $composer::params::suhosin_enabled,
+  $family          = $composer::params::family,
 ) inherits composer::params {
 
   include stdlib
