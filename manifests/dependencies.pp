@@ -32,6 +32,11 @@ class composer::dependencies(
 
   include stdlib
   
+  # Including git package if needed.
+  if ! defined(Package['git']) {
+    package { 'git': ensure => installed, }
+  }
+
   # Define PHP Package if needed.
   unless empty($php_package) {
 	  if ! defined(Package[$php_package]) {

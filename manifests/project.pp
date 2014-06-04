@@ -49,7 +49,7 @@ define composer::project(
   $timeout        = 1200,
   $user           = undef,
 ) {
-  require git
+
   require composer
 
   Exec {

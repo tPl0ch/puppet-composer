@@ -27,8 +27,8 @@ define composer::exec (
   $refreshonly       = false,
   $user              = undef,
 ) {
+
   require composer
-  require git
 
   Exec {
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
