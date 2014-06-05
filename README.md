@@ -102,7 +102,7 @@ composer::exec { 'silex-update':
     scripts              => false, # No script execution
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
-    dev                  => false, # Install dev dependencies
+    dev                  => true, # Install dev dependencies
     timeout              => undef, # Set a timeout for the exec type
     user                 => undef, # Set the user to run as
     refreshonly          => false, # Only run on refresh
