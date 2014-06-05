@@ -8,7 +8,7 @@ describe 'composer::exec' do
       } }
 
       context 'using install command' do
-        it { should contain_class('git') }
+        it { should contain_package('git') }
         it { should contain_class('composer') }
 
         let(:title) { 'myproject' }
@@ -29,7 +29,7 @@ describe 'composer::exec' do
       end
 
       context 'using update command' do
-        it { should contain_class('git') }
+        it { should contain_package('git') }
         it { should contain_class('composer') }
 
         let(:title) { 'yourpr0ject' }

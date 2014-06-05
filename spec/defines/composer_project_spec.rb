@@ -14,7 +14,7 @@ describe 'composer::project' do
           :target_dir   => '/my/subpar/project',
         } }
 
-        it { should contain_class('git') }
+        it { should contain_package('git') }
         it { should contain_class('composer') }
 
         it {
@@ -43,7 +43,7 @@ describe 'composer::project' do
           :user           => 'mrploch',
         } }
 
-        it { should contain_class('git') }
+        it { should contain_package('git') }
         it { should contain_class('composer') }
 
         it {

@@ -60,9 +60,6 @@ class composer(
   $projects        = hiera_hash('composer::projects', {}),
 ) inherits composer::params {
 
-  warning('The $curl_package parameter is deprecated so users of this module will get failures when they update if they have these set')
-  warning('The $wget_package parameter is deprecated so users of this module will get failures when they update if they have these set')
-
 	if $curl_package {
 	  $method_package = $curl_package
 	  warning('The $curl_package parameter is deprecated. Please update to $method_package')
