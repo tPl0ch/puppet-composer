@@ -111,6 +111,29 @@ describe 'composer' do
         it { should_not contain_augeas('allow_url_fopen') }
 
       end
+
+      context 'when receiving a projects hash' do
+        let(:params) { {
+          :projects        => { 'library1' => { 'project_name' => 'lib1', 'target_dir' => '/home/lib1' }, 'library2' => { 'project_name' => 'lib2', 'target_dir' => '/home/lib2' } }
+        } }
+
+        it {
+          should contain_composer__project('library1').with({
+            'project_name' => 'lib1',
+            'target_dir'   => '/home/lib1',
+          })
+        }
+
+        it {
+          should contain_composer__project('library2').with({
+            'project_name' => 'lib2',
+            'target_dir'   => '/home/lib2',
+          })
+        }
+
+        it { should have_composer__project_resource_count(2) }
+
+      end
     end
   end
 end
