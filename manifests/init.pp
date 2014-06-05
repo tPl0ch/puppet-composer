@@ -61,12 +61,9 @@ class composer(
 ) inherits composer::params {
 
 	if $curl_package {
-	  $method_package = $curl_package
 	  warning('The $curl_package parameter is deprecated. Please update to $method_package')
 	}
-
-  if $wget_package {
-	  $method_package = $wget_package
+	elsif $wget_package {
 	  warning('The $wget_package parameter is deprecated. Please update to $method_package')
 	}
 
