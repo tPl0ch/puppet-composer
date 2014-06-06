@@ -8,9 +8,14 @@
 #
 class composer::project_factory (
   $projects = hiera_hash('composer::project_factory::projects', {}),
+  $execs    = hiera_hash('composer::project_factory::execs', {}),
 ) {
 
   if $projects {
     create_resources('composer::project', $projects) 
+  }
+
+  if $execs {
+    create_resources('composer::exec', $execs) 
   }
 }

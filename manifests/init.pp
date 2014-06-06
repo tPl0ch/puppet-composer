@@ -59,6 +59,7 @@ class composer(
   $php_bin         = $composer::params::php_bin,
   $suhosin_enabled = $composer::params::suhosin_enabled,
   $projects        = hiera_hash('composer::projects', {}),
+  $execs           = hiera_hash('composer::execs', {}),
 ) inherits composer::params {
 
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
@@ -154,9 +155,10 @@ class composer(
     }
   }
 
-  if $projects {
+  if $projects or $execs{
     class {'composer::project_factory' :
       projects => $projects,
+      execs    => $execs,
     }
   }
 }

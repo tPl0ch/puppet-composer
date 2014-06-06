@@ -19,7 +19,7 @@ describe 'composer::exec' do
         } }
 
         it {
-          should contain_exec('composer_update_myproject').with({
+          should contain_exec('composer_install_myproject').with({
             :command       => %r{php /usr/local/bin/composer install --no-plugins --no-scripts --no-interaction},
             :cwd       => '/my/awesome/project',
             :user      => 'linus',
@@ -42,7 +42,28 @@ describe 'composer::exec' do
 
         it {
           should contain_exec('composer_update_yourpr0ject').without_user.with({
-            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction             package1             packageinf},
+            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction         package1         packageinf},
+            :cwd       => '/just/in/time',
+            :logoutput => true,
+          })
+        }
+      end
+
+      context 'using require command' do
+        it { should contain_class('git') }
+        it { should contain_class('composer') }
+
+        let(:title) { 'yourpr0ject' }
+        let(:params) { {
+          :cmd       => 'require',
+          :cwd       => '/just/in/time',
+          :packages  => ['package1', 'packageinf'],
+          :logoutput => true,
+        } }
+
+        it {
+          should contain_exec('composer_require_yourpr0ject').without_user.with({
+            :command   => %r{php /usr/local/bin/composer require package1 packageinf},
             :cwd       => '/just/in/time',
             :logoutput => true,
           })
