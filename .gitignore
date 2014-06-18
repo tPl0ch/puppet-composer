@@ -4,5 +4,6 @@ vendor/
 Gemfile.lock
 pkg/
 modules/
-
 .vagrant
+.ruby-version
+
