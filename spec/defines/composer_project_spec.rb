@@ -15,6 +15,7 @@ describe 'composer::project' do
         } }
 
         it { should contain_class('git') }
+        it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         it {
@@ -44,11 +45,12 @@ describe 'composer::project' do
         } }
 
         it { should contain_class('git') }
+        it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         it {
           should contain_exec('composer_create_project_whoadawg').with({
-            :command => %r{php /usr/local/bin/composer --stability=dev --dev --repository-url=git@github.com:trollface/whoadawg.git --prefer-source --keep-vcs create-project whoadawg99 /my/mediocre/project 0.0.8},
+            :command => %r{php /usr/local/bin/composer --stability=dev --repository-url=git@github.com:trollface/whoadawg.git --prefer-source --keep-vcs create-project whoadawg99 /my/mediocre/project 0.0.8},
             :tries   => 2,
             :timeout => 600,
             :creates => '/my/mediocre/project',

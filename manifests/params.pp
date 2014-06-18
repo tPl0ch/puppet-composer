@@ -13,6 +13,7 @@
 #
 class composer::params {
   $composer_home = $::composer_home
+  $auto_update   = false
 
   # Support Amazon Linux which is supported by RedHat family
   if $::osfamily == 'Linux' and $::operatingsystem == 'Amazon' {

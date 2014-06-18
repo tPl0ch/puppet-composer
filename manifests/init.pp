@@ -42,6 +42,12 @@
 #   The name or path of the php binary to override the default set in the
 #   composer::params class.
 #
+# [*suhosin_enabled*]
+#   If the suhosin mod is enabled. This requires setting php.ini values with augeas
+#
+# [*auto_update*]
+#   If the composer binary should automatically be updated on each run
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -58,12 +64,21 @@ class composer(
   $composer_home   = $composer::params::composer_home,
   $php_bin         = $composer::params::php_bin,
   $suhosin_enabled = $composer::params::suhosin_enabled,
-  $projects        = hiera_hash('composer::projects', {}),
-  $execs           = hiera_hash('composer::execs', {}),
-) inherits composer::params {
+  $auto_update     = $composer::params::auto_update,
+  $projects        = hiera_hash('composer::execs', {}),
+) inherits ::composer::params {
 
+  require ::stdlib
+  require ::git
+
+  # Validate input vars
+  validate_string($target_dir, $composer_file, $download_method, $tmp_path, $php_package, $curl_package, $wget_package, $composer_home, $php_bin)
+  validate_bool($logoutput, $suhosin_enabled, $auto_update)
+
+  # Set the exec path for composer target dir
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }
 
+  # Only install php package if it's not defined
   if defined(Package[$php_package]) == false {
     package { $php_package: ensure => present, }
   }
@@ -73,16 +88,16 @@ class composer(
     'curl': {
       $download_command = "curl -s http://getcomposer.org/installer | ${composer::php_bin}"
       $download_require = $suhosin_enabled ? {
-        true    => [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
-        default => [ Package['curl', $php_package] ]
+        false    => [ Package['curl', $php_package] ],
+        default  => [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
       }
       $method_package = $curl_package
     }
     'wget': {
       $download_command = 'wget http://getcomposer.org/composer.phar -O composer.phar'
       $download_require = $suhosin_enabled ? {
-        true    => [ Package['wget', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
-        default => [ Package['wget', $php_package] ]
+        false   => [ Package['wget', $php_package] ],
+        default => [ Package['wget', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
       }
       $method_package = $wget_package
     }
@@ -95,25 +110,32 @@ class composer(
     package { $method_package: ensure => present, }
   }
 
-  exec { 'download_composer':
-    command   => $download_command,
-    cwd       => $tmp_path,
-    require   => $download_require,
-    creates   => "${tmp_path}/composer.phar",
-    logoutput => $logoutput,
-  }
-
   # check if directory exists
-  file { $target_dir:
-    ensure => directory,
+  if defined(File[$target_dir]) == false {
+    file { $target_dir:
+      ensure => directory,
+    }
   }
 
-  # move file to target_dir
-  file { "${target_dir}/${composer_file}":
-    ensure  => present,
-    source  => "${tmp_path}/composer.phar",
-    require => [ Exec['download_composer'], File[$target_dir] ],
-    mode    => 0755,
+  if defined(File["${target_dir}/${composer_file}"]) == false {
+		exec { 'download_composer':
+		  command   => $download_command,
+		  cwd       => $tmp_path,
+		  require   => $download_require,
+		  creates   => "${tmp_path}/composer.phar",
+		  logoutput => $logoutput,
+		}
+		# move file to target_dir
+		file { "${target_dir}/${composer_file}":
+		  ensure  => present,
+		  source  => "${tmp_path}/composer.phar",
+		  require => [ Exec['download_composer'], File[$target_dir] ],
+		  mode    => 0755,
+		}
+  }
+
+  if $auto_update == true {
+    composer::selfupdate {'auto_update': }
   }
 
   if $suhosin_enabled == true {

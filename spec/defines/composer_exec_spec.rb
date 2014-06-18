@@ -9,13 +9,15 @@ describe 'composer::exec' do
 
       context 'using install command' do
         it { should contain_class('git') }
+        it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         let(:title) { 'myproject' }
         let(:params) { {
-          :cmd  => 'install',
-          :cwd  => '/my/awesome/project',
-          :user => 'linus',
+          :cmd     => 'install',
+          :cwd     => '/my/awesome/project',
+          :user    => 'linus',
+          :timeout => 1267,
         } }
 
         it {
@@ -24,12 +26,14 @@ describe 'composer::exec' do
             :cwd       => '/my/awesome/project',
             :user      => 'linus',
             :logoutput => false,
+            :timeout   => 1267,
           })
         }
       end
 
       context 'using update command' do
         it { should contain_class('git') }
+        it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         let(:title) { 'yourpr0ject' }
@@ -41,8 +45,8 @@ describe 'composer::exec' do
         } }
 
         it {
-          should contain_exec('composer_update_yourpr0ject').without_user.with({
-            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction         package1         packageinf},
+          should contain_exec('composer_update_yourpr0ject').without_user.without_timeout.with({
+            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction package1 packageinf},
             :cwd       => '/just/in/time',
             :logoutput => true,
           })
@@ -59,6 +63,7 @@ describe 'composer::exec' do
           :cwd       => '/just/in/time',
           :packages  => ['package1', 'packageinf'],
           :logoutput => true,
+          :dev       => false,
         } }
 
         it {
