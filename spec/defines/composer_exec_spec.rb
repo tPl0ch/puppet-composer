@@ -46,7 +46,7 @@ describe 'composer::exec' do
 
         it {
           should contain_exec('composer_update_yourpr0ject').without_user.without_timeout.with({
-            :command   => 'php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction package1 packageinf',
+            :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction package1 packageinf},
             :cwd       => '/just/in/time',
             :logoutput => true,
           })
@@ -63,6 +63,7 @@ describe 'composer::exec' do
           :cwd       => '/just/in/time',
           :packages  => ['package1', 'packageinf'],
           :logoutput => true,
+          :dev       => false,
         } }
 
         it {
