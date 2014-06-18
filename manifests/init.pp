@@ -65,9 +65,9 @@ class composer(
   $php_bin         = $composer::params::php_bin,
   $suhosin_enabled = $composer::params::suhosin_enabled,
   $auto_update     = $composer::params::auto_update,
+  $projects        = hiera_hash('composer::execs', {}),
 ) inherits ::composer::params {
 
-  $execs           = hiera_hash('composer::execs', {}),
   require ::stdlib
   require ::git
 
