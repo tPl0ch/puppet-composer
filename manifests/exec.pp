@@ -26,6 +26,8 @@ define composer::exec (
   $verbose           = false,
   $refreshonly       = false,
   $user              = undef,
+  $timeout           = 300,
+  $unless	     = undef
 ) {
   require composer
   require git
@@ -34,6 +36,7 @@ define composer::exec (
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
     environment => "COMPOSER_HOME=${composer::composer_home}",
     user        => $user,
+    unless	=> $unless
   }
 
   if $cmd != 'install' and $cmd != 'update' {
@@ -50,6 +53,7 @@ define composer::exec (
     command     => template('composer/exec.erb'),
     cwd         => $cwd,
     logoutput   => $logoutput,
-    refreshonly => $refreshonly
+    refreshonly => $refreshonly,
+    timeout     => $timeout
   }
 }
