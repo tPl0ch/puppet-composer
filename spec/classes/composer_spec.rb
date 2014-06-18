@@ -1,9 +1,13 @@
 require 'spec_helper'
 
 describe 'composer' do
-  ['RedHat', 'Debian'].each do |osfamily|
+  ['RedHat', 'Debian', 'Linux'].each do |osfamily|
     case osfamily
     when 'RedHat'
+      php_package = 'php-cli'
+      php_context = '/files/etc/php.ini/PHP'
+      suhosin_context = '/files/etc/suhosin.ini/suhosin'
+    when 'Linux'
       php_package = 'php-cli'
       php_context = '/files/etc/php.ini/PHP'
       suhosin_context = '/files/etc/suhosin.ini/suhosin'
@@ -19,10 +23,11 @@ describe 'composer' do
 
     context "on #{osfamily} operating system family" do
       let(:facts) { {
-          :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :operatingsystem => 'Amazon'
       } }
 
-      it { should include_class('composer::params') }
+      it { should contain_class('composer::params') }
 
       it {
         should contain_exec('download_composer').with({
@@ -49,7 +54,7 @@ describe 'composer' do
 
       context 'with default parameters' do
         it 'should compile' do
-          catalogue
+          compile
         end
 
         it { should contain_package(php_package).with_ensure('present') }
@@ -65,17 +70,29 @@ describe 'composer' do
         }
       end
 
+      context "on invalid operating system family" do
+        let(:facts) { {
+          :osfamily        => 'Invalid',
+          :operatingsystem => 'Amazon'
+        } }
+
+        it 'should not compile' do
+          expect { should compile }.to raise_error(/Unsupported platform: Invalid/)
+        end
+      end
+
       context 'with custom parameters' do
         let(:params) { {
           :target_dir      => '/you_sir/lowcal/been',
           :php_package     => 'php8-cli',
           :composer_file   => 'compozah',
           :curl_package    => 'kerl',
+          :php_bin         => 'pehpe',
           :suhosin_enabled => false,
         } }
 
         it 'should compile' do
-          catalogue
+          compile
         end
 
         it { should contain_package('php8-cli').with_ensure('present') }
@@ -92,6 +109,29 @@ describe 'composer' do
 
         it { should_not contain_augeas('whitelist_phar') }
         it { should_not contain_augeas('allow_url_fopen') }
+
+      end
+
+      context 'when receiving a projects hash' do
+        let(:params) { {
+          :projects        => { 'library1' => { 'project_name' => 'lib1', 'target_dir' => '/home/lib1' }, 'library2' => { 'project_name' => 'lib2', 'target_dir' => '/home/lib2' } }
+        } }
+
+        it {
+          should contain_composer__project('library1').with({
+            'project_name' => 'lib1',
+            'target_dir'   => '/home/lib1',
+          })
+        }
+
+        it {
+          should contain_composer__project('library2').with({
+            'project_name' => 'lib2',
+            'target_dir'   => '/home/lib2',
+          })
+        }
+
+        it { should have_composer__project_resource_count(2) }
 
       end
     end

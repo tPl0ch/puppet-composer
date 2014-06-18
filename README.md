@@ -6,6 +6,14 @@
 
 The `puppet-composer` module installs the latest version of Composer from http://getcomposer.org. Composer is a dependency manager for PHP.
 
+## Supported Platforms
+
+* `Debian`
+* `Ubuntu`
+* `Redhat`
+* `Centos`
+* `Amazon Linux`
+
 ## Installation
 
 #### Puppet Forge
@@ -23,6 +31,10 @@ You can also install as a git submodule and handle the dependencies manually. Se
 This module requires the following Puppet modules:
 
 * [`puppetlabs-git`](https://github.com/puppetlabs/puppetlabs-git/)
+
+And additional (for puppet version lower than 3.0.0) you need:
+
+* [`libaugeas`](http://augeas.net/) (For automatically updating php.ini settings for suhosin patch)
 
 ## Usage
 To install the `composer` binary globally in `/usr/local/bin` you only need to declare the `composer` class. We try to set some sane defaults. There are also a number of parameters you can tweak should the defaults not be sufficient.
@@ -46,7 +58,8 @@ class { 'composer':
     curl_package    => 'curl',
     wget_package    => 'wget',
     composer_home   => '/root',
-    suhosin_enable  => true,
+    php_bin         => 'php', # could also i.e. be 'php -d "apc.enable_cli=0"' for more fine grained control
+    suhosin_enabled => true,
 }
 ```
 
@@ -92,7 +105,7 @@ composer::exec { 'silex-update':
 
 #### Installing Packages
 
-We support the `install` command in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivilent to running `composer install` in the `/vagrant/silex` directory.
+We support the `install` command in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivalent to running `composer install` in the `/vagrant/silex` directory.
 
 ```puppet
 composer::exec { 'silex-install':
@@ -111,7 +124,11 @@ composer::exec { 'silex-install':
 
 ## Development
 
-We have `rspec-puppet` and Travis CI setup for the project. To run the spec tests locally you need `bundler` installed:
+For unit testing we use `rspec-puppet` and Travis CI. Functional testing happens through a Vagrant VM where you can test changes in a real server scenario.
+
+### Unit Tests
+
+When contributing fixes or features you should try and create RSpec tests for those changes. It is always a good idea to make sure the entire suite passes before opening a pull request. To run the RSpec tests locally you need `bundler` installed:
 
 ```
 gem install bundler
@@ -129,6 +146,18 @@ Finally, the tests can be run:
 rake spec
 ```
 
+### Functional Tests
+
+For easier development and actual testing the use of the module, we rely on Vagrant, which allows us to bring up a VM that we can use to test changes and perform active development without needing a real server.
+
+To get started with the Vagrant VM you should first get the [Unit Tests](#unit-tests) working. Then you will need to install [VirtualBox][virtualbox] and [Vagrant][vagrant].
+
+To bring up the development VM you can run `rake vagrant:up`. This Rake task runs `rake spec_prep` as a pre-requisite so that the `git` Puppet module is available. With the VM up and running you can login via SSH with `vagrant ssh` and run `puppet apply` against it with `rake vagrant:provision`.
+
+The VM will get the `spec/fixtures/manifests/vagrant.pp` file applied to the node. This currently creates a Silex project at `/tmp/silex` when the VM starts up. You can modify this manifest to your liking.
+
+Happy testing!
+
 ## Contributing
 
 We welcome everyone to help develop this module. To contribute:
@@ -140,4 +169,7 @@ We welcome everyone to help develop this module. To contribute:
 
 ## Todo
 
-* Add a 'composer::require' type
+* Add a `composer::require` type
+
+[vagrant]: http://vagrantup.com/
+[virtualbox]: https://www.virtualbox.org/wiki/Downloads

@@ -12,6 +12,9 @@ ruby '1.9.3'
 
 gem 'puppet', puppetversion
 gem 'puppetlabs_spec_helper'
-gem 'rspec-puppet'
+gem 'rspec-puppet', :github => 'rodjek/rspec-puppet', :ref => '03e94422fb9bbdd950d5a0bec6ead5d76e06616b'
+gem 'rspec', '~> 2.99.0'
 gem 'mocha'
 gem 'puppet-lint'
+gem 'hiera'
+gem 'hiera-puppet'
