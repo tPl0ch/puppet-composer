@@ -73,7 +73,7 @@ class composer(
 
   # Validate input vars
   validate_string($target_dir, $composer_file, $download_method, $tmp_path, $php_package, $curl_package, $wget_package, $composer_home, $php_bin)
-  validate_bool($logoutput, $suhosin_enabled, $auto_update)
+  validate_bool($suhosin_enabled, $auto_update)
 
   # Set the exec path for composer target dir
   Exec { path => "/bin:/usr/bin/:/sbin:/usr/sbin:${target_dir}" }

@@ -62,7 +62,7 @@ describe 'composer::exec' do
           :cmd       => 'require',
           :cwd       => '/just/in/time',
           :packages  => ['package1', 'packageinf'],
-          :logoutput => true,
+          :logoutput => 'on_failure',
           :dev       => false,
         } }
 
@@ -70,7 +70,7 @@ describe 'composer::exec' do
           should contain_exec('composer_require_yourpr0ject').without_user.with({
             :command   => %r{php /usr/local/bin/composer require package1 packageinf},
             :cwd       => '/just/in/time',
-            :logoutput => true,
+            :logoutput => 'on_failure',
           })
         }
       end

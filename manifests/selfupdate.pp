@@ -42,7 +42,7 @@ define composer::selfupdate(
 ) {
   require ::composer
 
-  validate_bool($rollback, $clean_backups, $logoutput)
+  validate_bool($rollback, $clean_backups)
 
   if $version == undef and $rollback == true {
     fail('You cannot use rollback without specifying a version')
