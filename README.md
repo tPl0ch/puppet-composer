@@ -39,6 +39,7 @@ This module requires the following Puppet modules:
 And additional (for puppet version lower than 3.0.0) you need:
 
 * [`libaugeas`](http://augeas.net/) (For automatically updating php.ini settings for suhosin patch)
+* [`hiera-puppet`](http://docs.puppetlabs.com/hiera/1/installing.html#step-2-install-the-puppet-functions) (For managing config data)
 
 ## Usage
 To install the `composer` binary globally in `/usr/local/bin` you only need to declare the `composer` class. We try to set some sane defaults. There are also a number of parameters you can tweak should the defaults not be sufficient.
