@@ -22,7 +22,7 @@ define composer::exec (
   $optimize                 = false,
   $interaction              = false,
   $dev                      = true,
-  $no_update                = false, 
+  $no_update                = false,
   $no_progress              = false,
   $update_with_dependencies = false,
   $logoutput                = false,
@@ -32,6 +32,7 @@ define composer::exec (
   $timeout                  = undef,
   $user                     = undef,
   $global                   = false,
+  $working_dir              = undef,
 ) {
   require ::composer
 

@@ -30,6 +30,10 @@
 # [*user*]
 #   The user name to exec the composer commands as. Default is undefined.
 #
+# [*working_dir*]
+#   Use the given directory as working directory.
+#
+# === Authors
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -50,6 +54,7 @@ define composer::project(
   $tries          = 3,
   $timeout        = 1200,
   $user           = undef,
+  $working_dir    = undef,
 ) {
   require ::composer
 
@@ -88,8 +93,13 @@ define composer::project(
     default => " ${version}",
   }
 
+  $wdir = $working_dir? {
+    undef   => '',
+    default => " --working-dir=${working_dir}",
+  }
+
   exec { $exec_name:
-    command => "${base_command}${dev_arg}${repo}${pref_src}${vcs} create-project ${end_command}${v}",
+    command => "${base_command}${dev_arg}${repo}${pref_src}${vcs}${wdir} create-project ${end_command}${v}",
     tries   => $tries,
     timeout => $timeout,
     creates => $target_dir,

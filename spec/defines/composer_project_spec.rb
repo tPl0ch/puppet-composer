@@ -42,6 +42,7 @@ describe 'composer::project' do
           :tries          => 2,
           :timeout        => 600,
           :user           => 'mrploch',
+          :working_dir    => '/my/working-dir',
         } }
 
         it { should contain_class('git') }
@@ -50,7 +51,7 @@ describe 'composer::project' do
 
         it {
           should contain_exec('composer_create_project_whoadawg').with({
-            :command => %r{php /usr/local/bin/composer --stability=dev --repository-url=git@github.com:trollface/whoadawg.git --prefer-source --keep-vcs create-project whoadawg99 /my/mediocre/project 0.0.8},
+            :command => %r{php /usr/local/bin/composer --stability=dev --repository-url=git@github.com:trollface/whoadawg.git --prefer-source --keep-vcs --working-dir=/my/working-dir create-project whoadawg99 /my/mediocre/project 0.0.8},
             :tries   => 2,
             :timeout => 600,
             :creates => '/my/mediocre/project',
