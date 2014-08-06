@@ -33,7 +33,7 @@ define composer::exec (
   $user                     = undef,
   $global                   = false,
   $working_dir              = undef,
-  $onlyif                   = true,
+  $onlyif                   = undef,
 ) {
   require ::composer
 
