@@ -33,6 +33,8 @@ define composer::exec (
   $user                     = undef,
   $global                   = false,
   $working_dir              = undef,
+  $onlyif                   = undef,
+  $unless                   = undef,
 ) {
   require ::composer
 
@@ -66,5 +68,7 @@ define composer::exec (
     logoutput   => $logoutput,
     refreshonly => $refreshonly,
     user        => $user,
+    onlyif      => $onlyif,
+    unless      => $unless,
   }
 }
