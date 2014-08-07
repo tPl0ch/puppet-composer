@@ -126,7 +126,8 @@ composer::exec { 'silex-install':
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
     dev                  => true, # Install dev dependencies
-    onlyif               => true, # If true
+    onlyif               => undef, # If true
+    unless               => undef, # If true
 }
 ```
 
