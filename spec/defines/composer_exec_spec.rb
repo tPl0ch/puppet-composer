@@ -18,15 +18,17 @@ describe 'composer::exec' do
           :cwd     => '/my/awesome/project',
           :user    => 'linus',
           :timeout => 1267,
+          :onlyif  => 'test ! -f /my/awesome/project',
         } }
 
         it {
           should contain_exec('composer_install_myproject').with({
-            :command       => %r{php /usr/local/bin/composer install --no-plugins --no-scripts --no-interaction},
+            :command   => %r{php /usr/local/bin/composer install --no-plugins --no-scripts --no-interaction},
             :cwd       => '/my/awesome/project',
             :user      => 'linus',
             :logoutput => false,
             :timeout   => 1267,
+            :onlyif    => 'test ! -f /my/awesome/project',
           })
         }
       end
