@@ -44,6 +44,7 @@ describe 'composer::exec' do
           :cwd       => '/just/in/time',
           :packages  => ['package1', 'packageinf'],
           :logoutput => true,
+          :unless  => '/just/in/time/bin/entry --version | grep 2\.0\.6',
         } }
 
         it {
@@ -51,6 +52,7 @@ describe 'composer::exec' do
             :command   => %r{php /usr/local/bin/composer update --no-plugins --no-scripts --no-interaction package1 packageinf},
             :cwd       => '/just/in/time',
             :logoutput => true,
+            :unless    => '/just/in/time/bin/entry --version | grep 2\.0\.6',
           })
         }
       end
