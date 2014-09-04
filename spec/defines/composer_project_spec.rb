@@ -56,6 +56,7 @@ describe 'composer::project' do
             :timeout => 600,
             :creates => '/my/mediocre/project',
             :user    => 'mrploch',
+            :cwd     => '/my/working-dir',
           })
         }
       end
