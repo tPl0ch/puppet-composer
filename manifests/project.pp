@@ -103,5 +103,6 @@ define composer::project(
     tries   => $tries,
     timeout => $timeout,
     creates => $target_dir,
+    cwd     => $working_dir
   }
 }
