@@ -10,8 +10,8 @@ source 'https://rubygems.org'
 
 gem 'puppet', puppetversion
 gem 'puppetlabs_spec_helper'
-gem 'rspec-puppet', :github => 'doc75/rspec-puppet', :branch => 'update-to-rspec3'
-gem 'rspec', '~> 3.0'
+gem 'rspec-puppet', :github => 'rodjek/rspec-puppet', :ref => '28c29d09e47211b65c0969b55082367a71d2e073'
+gem 'rspec', '< 3.0.0'
 gem 'mocha'
 gem 'puppet-lint'
 gem 'hiera'
