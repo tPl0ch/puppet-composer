@@ -31,7 +31,7 @@ describe 'composer' do
 
       it {
         should contain_exec('download_composer').with({
-          :command     => 'curl -s http://getcomposer.org/installer | php',
+          :command     => 'curl -s https://getcomposer.org/installer | php',
           :cwd         => '/tmp',
           :creates     => '/tmp/composer.phar',
           :logoutput   => false,

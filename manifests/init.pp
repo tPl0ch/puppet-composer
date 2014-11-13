@@ -86,7 +86,7 @@ class composer(
   # download composer
   case $download_method {
     'curl': {
-      $download_command = "curl -s http://getcomposer.org/installer | ${composer::php_bin}"
+      $download_command = "curl -s https://getcomposer.org/installer | ${composer::php_bin}"
       $download_require = $suhosin_enabled ? {
         false    => [ Package['curl', $php_package] ],
         default  => [ Package['curl', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
@@ -94,7 +94,7 @@ class composer(
       $method_package = $curl_package
     }
     'wget': {
-      $download_command = 'wget http://getcomposer.org/composer.phar -O composer.phar'
+      $download_command = 'wget https://getcomposer.org/composer.phar -O composer.phar'
       $download_require = $suhosin_enabled ? {
         false   => [ Package['wget', $php_package] ],
         default => [ Package['wget', $php_package], Augeas['allow_url_fopen', 'whitelist_phar'] ],
