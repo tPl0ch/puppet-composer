@@ -48,6 +48,7 @@ define composer::project(
   $version        = undef,
   $dev            = true,
   $prefer_source  = false,
+  $prefer_dist    = false,
   $stability      = 'dev',
   $repository_url = undef,
   $keep_vcs       = false,
@@ -88,6 +89,11 @@ define composer::project(
     default => ''
   }
 
+  $pref_dst = $prefer_dist? {
+    true    => ' --prefer-dist',
+    default => ''
+  }
+
   $v = $version? {
     undef   => '',
     default => " ${version}",
@@ -99,7 +105,7 @@ define composer::project(
   }
 
   exec { $exec_name:
-    command => "${base_command}${dev_arg}${repo}${pref_src}${vcs}${wdir} create-project ${end_command}${v}",
+    command => "${base_command}${dev_arg}${repo}${pref_src}${pref_dst}${vcs}${wdir} create-project ${end_command}${v}",
     tries   => $tries,
     timeout => $timeout,
     creates => $target_dir,
