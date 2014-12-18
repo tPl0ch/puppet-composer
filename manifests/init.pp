@@ -66,6 +66,7 @@ class composer(
   $suhosin_enabled = $composer::params::suhosin_enabled,
   $auto_update     = $composer::params::auto_update,
   $projects        = hiera_hash('composer::execs', {}),
+  $github_token    = undef,
 ) inherits ::composer::params {
 
   require ::stdlib
@@ -174,6 +175,19 @@ class composer(
           require     => Package[$php_package],
         }
       }
+    }
+  }
+
+
+  if $github_token {
+    Exec {
+      environment => "COMPOSER_HOME=${composer_home}",
+    }
+    exec { 'setup_github_token':
+      command   => "${target_dir}/${composer_file} config -g github-oauth.github.com ${github_token}",
+      cwd       => $tmp_path,
+      require   => File["${target_dir}/${composer_file}"],
+      unless    => "${target_dir}/${composer_file} config -g github-oauth.github.com|grep ${github_token}",
     }
   }
 

@@ -68,6 +68,8 @@ describe 'composer' do
             :mode   => '0755',
           })
         }
+
+        it { should_not contain_exec('setup_github_token') }
       end
 
       context "on invalid operating system family" do
@@ -89,6 +91,7 @@ describe 'composer' do
           :curl_package    => 'kerl',
           :php_bin         => 'pehpe',
           :suhosin_enabled => false,
+          :github_token    => 'my_token',
         } }
 
         it 'should compile' do
@@ -110,6 +113,13 @@ describe 'composer' do
         it { should_not contain_augeas('whitelist_phar') }
         it { should_not contain_augeas('allow_url_fopen') }
 
+        it {
+          should contain_exec('setup_github_token').with({
+            :command => "/you_sir/lowcal/been/compozah config -g github-oauth.github.com my_token",
+            :cwd     => '/tmp',
+            :unless  => "/you_sir/lowcal/been/compozah config -g github-oauth.github.com|grep my_token",
+          })
+        }
       end
 
       context 'when receiving a projects hash' do
