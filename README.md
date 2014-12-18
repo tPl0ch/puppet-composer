@@ -66,6 +66,7 @@ class { 'composer':
     php_bin         => 'php', # could also i.e. be 'php -d "apc.enable_cli=0"' for more fine grained control
     suhosin_enabled => true,
     auto_update     => false, # Set to true to automatically update composer to the latest version
+    github_token    => '1234567890abcdefgh',
 }
 ```
 
