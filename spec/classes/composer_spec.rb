@@ -51,27 +51,35 @@ describe 'composer' do
     }
 
     if p[:suhosin_enabled] then
+      it_behaves_like 'composer with suhosin', c
+    else
+      it_behaves_like 'composer without suhosin'
+    end
+
+    if p.include? :github_token then
+      it_behaves_like 'it sets a github token', composer_path, p[:github_token]
+    end
+  end
+
+  shared_examples 'composer with suhosin' do |ctx|
       it {
         should contain_augeas('whitelist_phar').with({
-          :context     => c[:suhosin_context],
+          :context     => ctx[:suhosin_context],
           :changes     => 'set suhosin.executor.include.whitelist phar',
         })
       }
 
       it {
         should contain_augeas('allow_url_fopen').with({
-          :context    => c[:php_context],
+          :context    => ctx[:php_context],
           :changes    => 'set allow_url_fopen On',
         })
       }
-    else
-      it { should_not contain_augeas('whitelist_phar') }
-      it { should_not contain_augeas('allow_url_fopen') }
-    end
+  end
 
-    if p.include? :github_token then
-      it_behaves_like 'it sets a github token', composer_path, p[:github_token]
-    end
+  shared_examples 'composer without suhosin' do
+    it { should_not contain_augeas('whitelist_phar') }
+    it { should_not contain_augeas('allow_url_fopen') }
   end
 
   shared_examples 'it sets a github token' do |path, token|
@@ -158,6 +166,31 @@ describe 'composer' do
       end
       context 'with projects' do
         it_behaves_like 'a composer module with projects', params, ctx
+      end
+    end
+  end
+
+  context 'for operatingsystem Ubuntu' do
+    facts  = { :osfamily    => 'Debian', :operatingsystem => 'Ubuntu' }
+    params = { :php_package => 'php5-cli' }
+    ctx    = {
+      :php_context     => '/files/etc/php5/cli/php.ini/PHP',
+      :suhosin_context => '/files/etc/php5/conf.d/suhosin.ini/suhosin',
+    }
+
+    context "for releases with php53" do
+      let(:facts) { { :operatingsystemmajrelease => '12.04' }.merge! facts }
+      context 'with defaults' do
+        it_behaves_like 'a composer module', params, ctx
+      end
+    end
+
+    ['12.10', '13.04', '13.10', '14.04, 14.10'].each do |release|
+      context "for release #{release} with php54" do
+        let(:facts) { { :operatingsystemmajrelease => release }.merge! facts }
+        context 'disables suhosin by default' do
+          it_behaves_like 'composer without suhosin'
+        end
       end
     end
   end

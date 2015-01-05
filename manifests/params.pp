@@ -33,7 +33,14 @@ class composer::params {
       $curl_package    = 'curl'
       $wget_package    = 'wget'
       $php_bin         = 'php'
-      $suhosin_enabled = true
+      case $::operatingsystem {
+        'Ubuntu': {
+          $suhosin_enabled = versioncmp($::operatingsystemmajrelease, '12.04') <= 0
+        }
+        default: {
+          $suhosin_enabled = true
+        }
+      }
     }
     'RedHat', 'Centos': {
       $target_dir      = '/usr/local/bin'
