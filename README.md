@@ -182,6 +182,30 @@ To bring up the development VM you can run `rake vagrant:up`. This Rake task run
 
 The VM will get the `spec/fixtures/manifests/vagrant.pp` file applied to the node. This currently creates a Silex project at `/tmp/silex` when the VM starts up. You can modify this manifest to your liking.
 
+### Acceptance Tests
+
+Acceptance tests are written using [Beaker](https://github.com/puppetlabs/beaker/wiki).
+
+To run the beaker tests via rake, you can simply run `rake beaker`.
+
+To use something other than the default beaker node, try the following:
+
+```
+BEAKER_set=ubuntu-server-1404-x64 rake beaker
+```
+
+To use beaker without rake, simply run `rspec spec/acceptance`.
+
+**Beaker + Hiera**
+
+When running acceptance tests, you may hit GitHub rate limits much faster than you would otherwise. To ensure your tests do not fail arbitrarily, you can add your GitHub auth token via hiera.
+
+Create a hiera config at `spec/fixtures/puppet/common.yaml`, that looks like this:
+
+```yaml
+composer::github_token: 'my_github_auth_token'
+```
+
 Happy testing!
 
 ## Contributing
