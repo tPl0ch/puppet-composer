@@ -16,3 +16,8 @@ gem 'mocha'
 gem 'puppet-lint'
 gem 'hiera'
 gem 'hiera-puppet'
+
+group :acceptance do
+  gem 'beaker'
+  gem 'beaker-rspec'
+end
