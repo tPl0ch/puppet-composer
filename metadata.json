@@ -7,7 +7,6 @@
   "source": "https://github.com/tPl0ch/puppet-composer.git",
   "project_page": "https://github.com/tPl0ch/puppet-composer",
   "issues_url": "https://github.com/tPl0ch/puppet-composer/issues",
-  "description": "This module installs the 'Composer' PHP dependency manager and provides some custom types to create, update\n    and install projects. Until now the Debian and Redhat OS families are supported.",
   "tags": ["composer", "php"],
   "dependencies": [
     {"name":"puppetlabs/git","version_requirement":">= 0.0.2"},
