@@ -11,8 +11,8 @@
 #   Leave empty for the latest version. Defaults to undefined.
 #
 # [*rollback*]
-#   Boolean indicating wether this action is a rollback. If it's true, a version *must*
-#   be defined! Defaults to FALSE.
+#   Boolean indicating wether this action is a rollback. If it's true,
+#   a version *must* be defined! Defaults to FALSE.
 #
 # [*clean_backups*]
 #   Boolean indicating wether backups should be cleaned. Defaults to FALSE
@@ -54,8 +54,10 @@ define composer::selfupdate(
     user        => $user,
   }
 
+  $composer_path = "${composer::target_dir}/${composer::composer_file}"
+
   $exec_name    = "composer_selfupdate_${title}"
-  $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} selfupdate"
+  $base_command = "${composer::php_bin} ${composer_path} selfupdate"
 
   if $version != undef {
     validate_string($version)
@@ -74,8 +76,10 @@ define composer::selfupdate(
     default => '',
   }
 
+  $cmd = "${base_command}${rollback_arg} ${clean_backups_arg}${version_arg}"
+
   exec { $exec_name:
-    command => "${base_command}${rollback_arg}${clean_backups_arg}${version_arg}",
+    command => $cmd,
     tries   => $tries,
     timeout => $timeout,
     user    => $user,
