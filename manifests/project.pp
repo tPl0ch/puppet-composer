@@ -34,7 +34,6 @@
 #   Use the given directory as working directory.
 #
 # === Authors
-# === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
 #
@@ -64,8 +63,12 @@ define composer::project(
     user        => $user,
   }
 
+  $composer_path = "${composer::target_dir}/${composer::composer_file}"
+  $stability_config = "--stability=${stability}"
+
   $exec_name    = "composer_create_project_${title}"
-  $base_command = "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} --stability=${stability}"
+  $base_command = "${composer::php_bin} ${composer_path} ${stability_config}"
+
   $end_command  = "${project_name} ${target_dir}"
 
   $dev_arg = $dev ? {
@@ -98,8 +101,11 @@ define composer::project(
     default => " --working-dir=${working_dir}",
   }
 
+  $concat_cmd = "${base_command}${dev_arg}${repo}${pref_src}${vcs}${wdir}"
+  $or_rm_command = "${end_command}${v} || rm -rf ${target_dir}"
+
   exec { $exec_name:
-    command => "${base_command}${dev_arg}${repo}${pref_src}${vcs}${wdir} create-project ${end_command}${v}",
+    command => "${concat_cmd} create-project ${or_rm_command}",
     tries   => $tries,
     timeout => $timeout,
     creates => $target_dir,

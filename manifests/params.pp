@@ -35,7 +35,9 @@ class composer::params {
       $php_bin         = 'php'
       case $::operatingsystem {
         'Ubuntu': {
-          $suhosin_enabled = versioncmp($::operatingsystemmajrelease, '12.04') <= 0
+          $suhosin_enabled = versioncmp(
+            $::operatingsystemmajrelease, '12.04'
+          ) <= 0
         }
         default: {
           $suhosin_enabled = true

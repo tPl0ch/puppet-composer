@@ -39,7 +39,11 @@ define composer::exec (
   require ::composer
 
   validate_string($cmd, $cwd)
-  validate_bool($lock, $prefer_source, $prefer_dist, $dry_run, $custom_installers, $scripts, $optimize, $interaction, $dev, $verbose, $refreshonly)
+  validate_bool(
+    $lock, $prefer_source, $prefer_dist, $dry_run,
+    $custom_installers, $scripts, $optimize, $interaction, $dev,
+    $verbose, $refreshonly
+  )
   validate_array($packages)
 
   Exec {
@@ -50,16 +54,20 @@ define composer::exec (
   }
 
   if $cmd != 'install' and $cmd != 'update' and $cmd != 'require' {
-    fail("Only types 'install', 'update' and 'require'' are allowed, ${cmd} given")
+    fail(
+      "Only types 'install', 'update' and 'require'' are allowed, ${cmd} given"
+    )
   }
 
   if $prefer_source and $prefer_dist {
     fail('Only one of \$prefer_source or \$prefer_dist can be true.')
   }
 
+  $composer_path = "${composer::target_dir}/${composer::composer_file}"
+
   $command = $global ? {
-    true  => "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} global ${cmd}",
-    false => "${composer::php_bin} ${composer::target_dir}/${composer::composer_file} ${cmd}",
+    true  => "${composer::php_bin} ${composer_path} global ${cmd}",
+    false => "${composer::php_bin} ${composer_path} ${cmd}",
   }
 
   exec { "composer_${cmd}_${title}":

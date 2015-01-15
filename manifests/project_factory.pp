@@ -12,10 +12,10 @@ class composer::project_factory (
 ) {
 
   if $projects {
-    create_resources('composer::project', $projects) 
+    create_resources('composer::project', $projects)
   }
 
   if $execs {
-    create_resources('composer::exec', $execs) 
+    create_resources('composer::exec', $execs)
   }
 }
