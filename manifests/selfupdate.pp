@@ -76,7 +76,7 @@ define composer::selfupdate(
     default => '',
   }
 
-  $cmd = "${base_command}${rollback_arg} ${clean_backups_arg}${version_arg}"
+  $cmd = "${base_command}${rollback_arg}${clean_backups_arg}${version_arg}"
 
   exec { $exec_name:
     command => $cmd,

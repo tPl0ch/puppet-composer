@@ -154,7 +154,7 @@ class composer(
   }
 
   if $suhosin_enabled == true {
-    case $::family {
+    case $composer::params::family {
 
       'Redhat','Centos': {
 
@@ -190,9 +190,7 @@ class composer(
         }
       }
 
-      #default: {
-      #  fail('Unsupported OS family')
-      #}
+      default: {}
     }
   }
 
@@ -207,7 +205,7 @@ class composer(
       command => "${composer_path} ${github_config} ${github_token}",
       cwd     => $tmp_path,
       require => File["${target_dir}/${composer_file}"],
-      unless  => "${composer_path} ${github_config} | grep ${github_token}",
+      unless  => "${composer_path} ${github_config}|grep ${github_token}",
     }
   }
 

@@ -102,10 +102,10 @@ define composer::project(
   }
 
   $concat_cmd = "${base_command}${dev_arg}${repo}${pref_src}${vcs}${wdir}"
-  $or_rm_command = "|| rm -rf ${target_dir}"
+  $or_rm_command = "${end_command}${v} || rm -rf ${target_dir}"
 
   exec { $exec_name:
-    command => "${concat_cmd} create-project ${end_command}${v} ${or_rm_command}",
+    command => "${concat_cmd} create-project ${or_rm_command}",
     tries   => $tries,
     timeout => $timeout,
     creates => $target_dir,
