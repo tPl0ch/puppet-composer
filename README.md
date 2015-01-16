@@ -217,9 +217,5 @@ We welcome everyone to help develop this module. To contribute:
 * Commit to feature named branch
 * Open a pull request outlining your changes and the reasoning for them
 
-## Todo
-
-* Add a `composer::require` type
-
 [vagrant]: http://vagrantup.com/
 [virtualbox]: https://www.virtualbox.org/wiki/Downloads
