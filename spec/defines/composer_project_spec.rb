@@ -20,7 +20,7 @@ describe 'composer::project' do
 
         it {
           should contain_exec('composer_create_project_myproject').without_user.with({
-            :command => "php /usr/local/bin/composer --stability=dev create-project projectzzz /my/subpar/project || rm -rf /my/subpar/project",
+            :command => "php /usr/local/bin/composer --stability=dev --no-interaction create-project projectzzz /my/subpar/project || rm -rf /my/subpar/project",
             :tries   => 3,
             :timeout => 1200,
             :creates => '/my/subpar/project',
@@ -51,7 +51,7 @@ describe 'composer::project' do
 
         it {
           should contain_exec('composer_create_project_whoadawg').with({
-            :command => %r{php /usr/local/bin/composer --stability=dev --repository-url=git@github.com:trollface/whoadawg.git --prefer-source --keep-vcs --working-dir=/my/working-dir create-project whoadawg99 /my/mediocre/project 0.0.8 || rm -rf /my/subpar/project},
+            :command => %r{php /usr/local/bin/composer --stability=dev --repository-url=git@github.com:trollface/whoadawg.git --prefer-source --keep-vcs --working-dir=/my/working-dir --no-interaction create-project whoadawg99 /my/mediocre/project 0.0.8 || rm -rf /my/subpar/project},
             :tries   => 2,
             :timeout => 600,
             :creates => '/my/mediocre/project',
