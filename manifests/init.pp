@@ -49,6 +49,9 @@
 # [*auto_update*]
 #   If the composer binary should automatically be updated on each run
 #
+# [*user*]
+#   The user name to exec the composer commands as. Default is undefined.
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -68,6 +71,7 @@ class composer(
   $auto_update     = $composer::params::auto_update,
   $projects        = hiera_hash('composer::execs', {}),
   $github_token    = undef,
+  $user            = undef,
 ) inherits ::composer::params {
 
   require ::stdlib
@@ -205,6 +209,7 @@ class composer(
       command => "${composer_path} ${github_config} ${github_token}",
       cwd     => $tmp_path,
       require => File["${target_dir}/${composer_file}"],
+      user    => $user,
       unless  => "${composer_path} ${github_config}|grep ${github_token}",
     }
   }
