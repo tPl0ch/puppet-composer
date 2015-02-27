@@ -30,7 +30,7 @@ define composer::exec (
   $refreshonly              = false,
   $lock                     = false,
   $timeout                  = undef,
-  $user                     = undef,
+  $user                     = $composer::user,
   $global                   = false,
   $working_dir              = undef,
   $onlyif                   = undef,

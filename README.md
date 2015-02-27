@@ -67,6 +67,7 @@ class { 'composer':
     suhosin_enabled => true,
     auto_update     => false, # Set to true to automatically update composer to the latest version
     github_token    => '1234567890abcdefgh',
+    user            => 'app',
 }
 ```
 
