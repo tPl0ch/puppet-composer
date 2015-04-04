@@ -7,3 +7,6 @@ pkg/
 modules/
 .vagrant
 .ruby-version
+
+# IDE ignores
+.idea
