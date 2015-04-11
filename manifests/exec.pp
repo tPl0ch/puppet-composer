@@ -33,6 +33,7 @@ define composer::exec (
   $user                     = undef,
   $global                   = false,
   $working_dir              = undef,
+  $format                   = undef,
   $onlyif                   = undef,
   $unless                   = undef,
 ) {
@@ -57,17 +58,27 @@ define composer::exec (
     'install',
     'update',
     'require',
-    'run-scripts'
+    'run-scripts',
+    'cache-clear'
   ]
 
   if member($exec_cmds, $cmd) == false {
     fail(
-      "Only types 'install', 'update', 'run-scripts' and 'require' are allowed, ${cmd} given"
+      "Only types 'install', 'update', 'cache-clear', 'run-scripts' and 'require' are allowed, ${cmd} given"
     )
   }
 
   if $prefer_source and $prefer_dist {
     fail('Only one of \$prefer_source or \$prefer_dist can be true.')
+  }
+
+  if $format {
+    if $cmd != 'cache-clear' {
+      fail('Format only applies when \$cmd is set to `cache-clear`.')
+    }
+    elsif $format != 'text' and $format != 'json' {
+      fail('Invalid format specified. Use \'text\' or \'json\'.')
+    }
   }
 
   $composer_path = "${composer::target_dir}/${composer::composer_file}"
