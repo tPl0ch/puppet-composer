@@ -62,7 +62,7 @@ define composer::exec (
 
   if member($exec_cmds, $cmd) == false {
     fail(
-      "Only types 'install', 'update' and 'require' are allowed, ${cmd} given"
+      "Only types 'install', 'update', 'run-scripts' and 'require' are allowed, ${cmd} given"
     )
   }
 
