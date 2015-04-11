@@ -70,6 +70,23 @@ class { 'composer':
 }
 ```
 
+You can control the projects included with composer using Hiera. See the following sections for a full list of options which can be passed to `composer::exec`
+
+#### Hiera Project Definitions
+```yaml
+composer::execs:
+  silex-install:
+    cmd: 'install'
+    packages:
+      - silex
+    cwd: '/vagrant/silex'
+  drush-install:
+    cmd: 'install'
+    packages:
+      - drush
+    cwd: '/vagrant/drush'
+```
+
 ### Creating Projects
 
 The `composer::project` definition provides a way to create projects in a target directory.
@@ -78,57 +95,81 @@ The `composer::project` definition provides a way to create projects in a target
 composer::project { 'silex':
     project_name   => 'fabpot/silex-skeleton',  # REQUIRED
     target_dir     => '/vagrant/silex', # REQUIRED
-    version        => '2.1.x-dev', # Some valid version string
+    version        => '2.1.x-dev', # Some valid version string.
     prefer_source  => true,
-    stability      => 'dev', # Minimum stability setting
-    keep_vcs       => false, # Keep the VCS information
-    dev            => true, # Install dev dependencies
-    repository_url => 'http://repo.example.com', # Custom repository URL
-    user           => undef, # Set the user to run as
+    stability      => 'dev', # Minimum stability setting.
+    keep_vcs       => false, # Keep the VCS information.
+    dev            => true, # Install dev dependencies.
+    repository_url => 'http://repo.example.com', # Custom repository URL.
+    user           => undef, # Set the user to run as.
+    tries          => 3, # Number of attempts to try.
+    timeout        => 1200, # Timeout in seconds.
+    working_dir    => undef, # Working directory path.
 }
 ```
 
 ### Updating Packages
 
-The `composer::exec` definition provides a more generic wrapper arround composer `update` and `install` commands. The following example will update the `silex/silex` and `symfony/browser-kit` packages in the `/vagrant/silex` directory. You can omit `packages` to update the entire project.
+The `composer::exec` definition provides a more generic wrapper arround composer `update`, `install`, `require` and `run-scripts` commands. The following example will update the `silex/silex` and `symfony/browser-kit` packages in the `/vagrant/silex` directory. You can omit `packages` to update the entire project.
 
 ```puppet
 composer::exec { 'silex-update':
-    cmd                  => 'update',  # REQUIRED
-    cwd                  => '/vagrant/silex', # REQUIRED
-    packages             => ['silex/silex', 'symfony/browser-kit'], # leave empty or omit to update whole project
-    prefer_source        => false, # Only one of prefer_source or prefer_dist can be true
-    prefer_dist          => false, # Only one of prefer_source or prefer_dist can be true
-    dry_run              => false, # Just simulate actions
-    custom_installers    => false, # No custom installers
-    scripts              => false, # No script execution
-    interaction          => false, # No interactive questions
-    optimize             => false, # Optimize autoloader
-    dev                  => true, # Install dev dependencies
-    timeout              => undef, # Set a timeout for the exec type
-    user                 => undef, # Set the user to run as
-    refreshonly          => false, # Only run on refresh
+    cmd                      => 'update',  # REQUIRED
+    cwd                      => '/vagrant/silex', # REQUIRED
+    packages                 => ['silex/silex', 'symfony/browser-kit'], # Leave empty or omit to update whole project.
+    prefer_source            => false, # Only one of prefer_source or prefer_dist can be true.
+    prefer_dist              => false, # Only one of prefer_source or prefer_dist can be true.
+    dry_run                  => false, # Just simulate actions.
+    custom_installers        => false, # No custom installers.
+    scripts                  => false, # No script execution.
+    interaction              => false, # No interactive questions.
+    optimize                 => false, # Optimize autoloader.
+    dev                      => true,  # Install dev dependencies.
+    timeout                  => undef, # Set a timeout for the exec type.
+    user                     => undef, # Set the user to run as.
+    refreshonly              => false, # Only run on refresh.
+    no_update                => false, # Disables the automatic update of the dependencies.
+    no_progress              => false, # Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters.
+    update_with_dependencies => false, # Also update dependencies of the newly required packages.
+    logoutput                => false, # Enable output logging.
+    verbose                  => false, # Increase verbosity of messages.
+    lock                     => false, # Only updates the lock file hash to suppress warning about the lock file being out of date.
+    global                   => false, # The global command allows you to run other commands like install, require or update as if you were running them from the COMPOSER_HOME directory.
+    working_dir              => undef, # If specified, use the given directory as working directory.
+    onlyif                   => undef, # If true.
+    unless                   => undef, # If true.
 }
 ```
 
 ### Installing Packages
 
-We support the `install` command in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivalent to running `composer install` in the `/vagrant/silex` directory.
+We support the `install`, `require`, `run-scripts` commands in addition to `update`. The install command will ignore the `packages` parameter and the following example is the equivalent to running `composer install` in the `/vagrant/silex` directory.
 
 ```puppet
 composer::exec { 'silex-install':
-    cmd                  => 'install',  # REQUIRED
-    cwd                  => '/vagrant/silex', # REQUIRED
-    prefer_source        => false,
-    prefer_dist          => false,
-    dry_run              => false, # Just simulate actions
-    custom_installers    => false, # No custom installers
-    scripts              => false, # No script execution
-    interaction          => false, # No interactive questions
-    optimize             => false, # Optimize autoloader
-    dev                  => true, # Install dev dependencies
-    onlyif               => undef, # If true
-    unless               => undef, # If true
+    cmd                      => 'install',  # REQUIRED
+    cwd                      => '/vagrant/silex', # REQUIRED
+    prefer_source            => false,
+    prefer_dist              => false,
+    dry_run                  => false, # Just simulate actions
+    custom_installers        => false, # No custom installers
+    scripts                  => false, # No script execution
+    interaction              => false, # No interactive questions
+    optimize                 => false, # Optimize autoloader
+    dev                      => true, # Install dev dependencies
+    timeout                  => undef, # Set a timeout for the exec type.
+    user                     => undef, # Set the user to run as.
+    refreshonly              => false, # Only run on refresh.
+    no_update                => false, # Disables the automatic update of the dependencies.
+    no_progress              => false, # Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters.
+    update_with_dependencies => false, # Also update dependencies of the newly required packages.
+    logoutput                => false, # Enable output logging.
+    verbose                  => false, # Increase verbosity of messages.
+    lock                     => false, # Only updates the lock file hash to suppress warning about the lock file being out of date.
+    global                   => false, # The global command allows you to run other commands like install, require or update as if you were running them from the COMPOSER_HOME directory.
+    working_dir              => undef, # If specified, use the given directory as working directory.
+    onlyif                   => undef, # If true.
+    unless                   => undef, # If true.
 }
 ```
 
