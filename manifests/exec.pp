@@ -72,6 +72,7 @@ define composer::exec (
     fail('Only one of \$prefer_source or \$prefer_dist can be true.')
   }
 
+  # Validate format for cache-clear command
   if $format {
     if $cmd != 'cache-clear' {
       fail('Format only applies when \$cmd is set to `cache-clear`.')
