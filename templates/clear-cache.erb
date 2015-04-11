@@ -1,0 +1,4 @@
+<%= @command -%>
+<% unless @dev %> --no-dev<% end -%>
+<% if @format %> --format=<%= @format%><%end -%>
+<%- end -%>

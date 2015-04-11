@@ -136,6 +136,7 @@ composer::exec { 'silex-update':
     lock                     => false, # Only updates the lock file hash to suppress warning about the lock file being out of date.
     global                   => false, # The global command allows you to run other commands like install, require or update as if you were running them from the COMPOSER_HOME directory.
     working_dir              => undef, # If specified, use the given directory as working directory.
+    format                   => undef, # Format of the output: text or json (default: "text"). Only applies to `cache-clear`.
     onlyif                   => undef, # If true.
     unless                   => undef, # If true.
 }
