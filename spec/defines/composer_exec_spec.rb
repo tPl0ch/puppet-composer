@@ -93,7 +93,7 @@ describe 'composer::exec' do
         } }
 
         it {
-          should contain_exec('composer_cache_clear').without_user.without_timeout.with({
+          should contain_exec('composer_clear_cache').without_user.without_timeout.with({
             :command   => %r{php /usr/local/bin/composer clear-cache --no-plugins --no-scripts --no-interaction},
             :cwd       => '/just/in/time',
             :logoutput => true,
