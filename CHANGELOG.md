@@ -1,3 +1,8 @@
+v2.0.0
+======
+Supports cache-clear, install, update, run-scripts and dump-autoload.  
+Require and global require are now supported.  
+
 v1.2.1
 ======
 f44b7e5 Now also supports Amazon Linux (RedHat)

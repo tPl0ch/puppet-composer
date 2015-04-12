@@ -38,4 +38,5 @@ notifications:
 branches:
   only:
     - master
+    - feature-20
     - /^release.*$/
