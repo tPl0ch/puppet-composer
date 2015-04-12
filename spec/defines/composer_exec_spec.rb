@@ -79,14 +79,14 @@ describe 'composer::exec' do
         }
       end
 
-      context 'using cache-clear command' do
+      context 'using clear-cache command' do
         it { should contain_class('git') }
         it { should contain_class('stdlib') }
         it { should contain_class('composer') }
 
         let(:title) { 'yourpr0ject' }
         let(:params) { {
-          :cmd       => 'cache-clear',
+          :cmd       => 'clear-cache',
           :cwd       => '/just/in/time',
           :logoutput => true,
           :unless  => '/just/in/time/bin/entry --version | grep 2\.0\.6',
@@ -94,7 +94,7 @@ describe 'composer::exec' do
 
         it {
           should contain_exec('composer_cache_clear').without_user.without_timeout.with({
-            :command   => %r{php /usr/local/bin/composer cache-clear --no-plugins --no-scripts --no-interaction},
+            :command   => %r{php /usr/local/bin/composer clear-cache --no-plugins --no-scripts --no-interaction},
             :cwd       => '/just/in/time',
             :logoutput => true,
             :unless    => '/just/in/time/bin/entry --version | grep 2\.0\.6',
