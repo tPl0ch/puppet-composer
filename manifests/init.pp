@@ -96,7 +96,7 @@ class composer(
   # download composer
   case $download_method {
     'curl': {
-      $download_command = "curl -s https://getcomposer.org/installer | ${composer::php_bin}"
+      $download_command = "curl -sS https://getcomposer.org/installer | ${composer::php_bin}"
       $download_require = $suhosin_enabled ? {
         false    => [ Package['curl', $php_package] ],
         default  => [
