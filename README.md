@@ -17,6 +17,7 @@ This module supports puppet in versions `>= 2.7, <3.5`
 * `Redhat`
 * `Centos`
 * `Amazon Linux`
+* `FreeBSD`
 
 ## Installation
 

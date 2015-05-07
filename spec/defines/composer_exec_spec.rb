@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'composer::exec' do
-  ['RedHat', 'Debian'].each do |osfamily|
+  ['RedHat', 'Debian', 'FreeBSD'].each do |osfamily|
     context "on #{osfamily} operating system family" do
       let(:facts) { {
           :osfamily => osfamily,
