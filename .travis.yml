@@ -19,7 +19,7 @@ env:
 matrix:
   allow_failures:
     - rvm: ruby-head
-      env: PUPPET_VERSION=3.7.3
+    - env: PUPPET_VERSION=3.7.3
   exclude:
     - rvm: 2.0.0
       env: PUPPET_VERSION=2.7.25
