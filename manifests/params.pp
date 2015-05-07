@@ -56,6 +56,18 @@ class composer::params {
       $php_bin         = 'php'
       $suhosin_enabled = true
     }
+    'FreeBSD': {
+      $target_dir      = '/usr/local/bin'
+      $composer_file   = 'composer'
+      $download_method = 'curl'
+      $logoutput       = false
+      $tmp_path        = '/tmp'
+      $php_package     = 'php5'
+      $curl_package    = 'curl'
+      $wget_package    = 'wget'
+      $php_bin         = 'php'
+      $suhosin_enabled = false 
+    }
     default: {
       fail("Unsupported platform: ${family}")
     }

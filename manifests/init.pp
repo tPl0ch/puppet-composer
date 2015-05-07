@@ -194,6 +194,22 @@ class composer(
         }
       }
 
+      'FreeBSD': {
+        # set /usr/local/etc/php/suhosin.ini/suhosin.executor.include.whitelist = phar
+        augeas { 'whitelist_phar':
+          context => '/files/usr/local/etc/php/suhosin.ini/suhosin',
+          changes => 'set suhosin.executor.include.whitelist phar',
+          require => Package[$php_package],
+        }
+
+        # set /usr/local/etc/php.ini/PHP/allow_url_fopen = On
+        augeas { 'allow_url_fopen':
+          context => '/files/usr/local/etc/php.ini/PHP',
+          changes => 'set allow_url_fopen On',
+          require => Package[$php_package],
+        }
+      }
+
       default: {}
     }
   }
