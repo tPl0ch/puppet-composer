@@ -39,6 +39,7 @@ define composer::selfupdate(
   $logoutput     = false,
   $timeout       = 300,
   $tries         = 3,
+  $schedule      = undef,
 ) {
   require ::composer
 
@@ -79,9 +80,10 @@ define composer::selfupdate(
   $cmd = "${base_command}${rollback_arg}${clean_backups_arg}${version_arg}"
 
   exec { $exec_name:
-    command => $cmd,
-    tries   => $tries,
-    timeout => $timeout,
-    user    => $user,
+    command  => $cmd,
+    tries    => $tries,
+    timeout  => $timeout,
+    user     => $user,
+    schedule => $schedule,
   }
 }
