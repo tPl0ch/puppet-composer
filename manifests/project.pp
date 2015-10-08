@@ -28,7 +28,7 @@
 #   The Package name of the PHP CLI package.
 #
 # [*user*]
-#   The user name to exec the composer commands as. Default is undefined.
+#   The user name to exec the composer commands as. Default is composer::user.
 #
 # [*working_dir*]
 #   Use the given directory as working directory.
@@ -52,7 +52,7 @@ define composer::project(
   $keep_vcs       = false,
   $tries          = 3,
   $timeout        = 1200,
-  $user           = undef,
+  $user           = $composer::user,
   $working_dir    = undef,
 ) {
   require ::composer
@@ -105,7 +105,7 @@ define composer::project(
   $or_rm_command = "${end_command}${v} || rm -rf ${target_dir}"
 
   exec { $exec_name:
-    command => "${concat_cmd} create-project ${or_rm_command}",
+    command => "${concat_cmd} --no-interaction create-project ${or_rm_command}",
     tries   => $tries,
     timeout => $timeout,
     creates => $target_dir,

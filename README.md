@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/tPl0ch/puppet-composer.png?branch=master)](https://travis-ci.org/tPl0ch/puppet-composer)
 
+## Maintainers needed!
+
+See https://github.com/tPl0ch/puppet-composer/issues/84 for more details!
+
 ## Description
 
 The `puppet-composer` module installs the latest version of Composer from http://getcomposer.org. Composer is a dependency manager for PHP.
@@ -17,6 +21,7 @@ This module supports puppet in versions `>= 2.7, <3.5`
 * `Redhat`
 * `Centos`
 * `Amazon Linux`
+* `FreeBSD`
 
 ## Installation
 
@@ -67,6 +72,7 @@ class { 'composer':
     suhosin_enabled => true,
     auto_update     => false, # Set to true to automatically update composer to the latest version
     github_token    => '1234567890abcdefgh',
+    user            => 'app',
 }
 ```
 

@@ -30,7 +30,7 @@ define composer::exec (
   $refreshonly              = false,
   $lock                     = false,
   $timeout                  = undef,
-  $user                     = undef,
+  $user                     = $composer::user,
   $global                   = false,
   $working_dir              = undef,
   $format                   = undef,
@@ -47,9 +47,13 @@ define composer::exec (
   )
   validate_array($packages)
 
+  $m_timeout = $timeout?{
+    undef => 300,
+    default => $timeout
+  }
   Exec {
     path        => "/bin:/usr/bin/:/sbin:/usr/sbin:${composer::target_dir}",
-    environment => "COMPOSER_HOME=${composer::composer_home}",
+    environment => ["COMPOSER_HOME=${composer::composer_home}", "COMPOSER_PROCESS_TIMEOUT=${m_timeout}"],
     user        => $user,
     timeout     => $timeout
   }

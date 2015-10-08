@@ -49,6 +49,9 @@
 # [*auto_update*]
 #   If the composer binary should automatically be updated on each run
 #
+# [*user*]
+#   The user name to exec the composer commands as. Default is undefined.
+#
 # === Authors
 #
 # Thomas Ploch <profiploch@gmail.com>
@@ -68,6 +71,7 @@ class composer(
   $auto_update     = $composer::params::auto_update,
   $projects        = hiera_hash('composer::execs', {}),
   $github_token    = undef,
+  $user            = undef,
 ) inherits ::composer::params {
 
   require ::stdlib
@@ -92,7 +96,7 @@ class composer(
   # download composer
   case $download_method {
     'curl': {
-      $download_command = "curl -s https://getcomposer.org/installer | ${composer::php_bin}"
+      $download_command = "curl -sS https://getcomposer.org/installer | ${composer::php_bin}"
       $download_require = $suhosin_enabled ? {
         false    => [ Package['curl', $php_package] ],
         default  => [
@@ -190,6 +194,22 @@ class composer(
         }
       }
 
+      'FreeBSD': {
+        # set /usr/local/etc/php/suhosin.ini/suhosin.executor.include.whitelist = phar
+        augeas { 'whitelist_phar':
+          context => '/files/usr/local/etc/php/suhosin.ini/suhosin',
+          changes => 'set suhosin.executor.include.whitelist phar',
+          require => Package[$php_package],
+        }
+
+        # set /usr/local/etc/php.ini/PHP/allow_url_fopen = On
+        augeas { 'allow_url_fopen':
+          context => '/files/usr/local/etc/php.ini/PHP',
+          changes => 'set allow_url_fopen On',
+          require => Package[$php_package],
+        }
+      }
+
       default: {}
     }
   }
@@ -205,6 +225,7 @@ class composer(
       command => "${composer_path} ${github_config} ${github_token}",
       cwd     => $tmp_path,
       require => File["${target_dir}/${composer_file}"],
+      user    => $user,
       unless  => "${composer_path} ${github_config}|grep ${github_token}",
     }
   }
