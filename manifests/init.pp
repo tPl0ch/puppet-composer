@@ -231,10 +231,10 @@ class composer(
     }
   }
 
-  if $projects or $::execs {
+  if $projects or $execs {
     class {'composer::project_factory' :
       projects => $projects,
-      execs    => $::execs,
+      execs    => $execs,
     }
   }
 }
