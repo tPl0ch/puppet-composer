@@ -7,8 +7,8 @@
 #
 #
 class composer::project_factory (
-  $projects = hiera_hash('composer::project_factory::projects', {}),
-  $execs    = hiera_hash('composer::project_factory::execs', {}),
+  $projects = undef,
+  $execs    = undef,
 ) {
 
   if $projects {
