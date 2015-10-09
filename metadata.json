@@ -1,6 +1,6 @@
 {
   "name": "tPl0ch-composer",
-  "version": "1.3.7",
+  "version": "2.0.0",
   "author": "tPl0ch - Thomas Ploch <profiploch@gmail.com>",
   "summary": "This module provides the 'Composer' PHP dependency manager.",
   "license": "MIT",
