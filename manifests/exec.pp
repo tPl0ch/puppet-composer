@@ -63,12 +63,12 @@ define composer::exec (
     'update',
     'require',
     'run-scripts',
-    'cache-clear'
+    'clear-cache'
   ]
 
   if member($exec_cmds, $cmd) == false {
     fail(
-      "Only types 'install', 'update', 'cache-clear', 'run-scripts' and 'require' are allowed, ${cmd} given"
+      "Only types 'install', 'update', 'clear-cache', 'run-scripts' and 'require' are allowed, ${cmd} given"
     )
   }
 
@@ -76,10 +76,10 @@ define composer::exec (
     fail('Only one of \$prefer_source or \$prefer_dist can be true.')
   }
 
-  # Validate format for cache-clear command
+  # Validate format for clear-cache command
   if $format {
-    if $cmd != 'cache-clear' {
-      fail('Format only applies when \$cmd is set to `cache-clear`.')
+    if $cmd != 'clear-cache' {
+      fail('Format only applies when \$cmd is set to `clear-cache`.')
     }
     elsif $format != 'text' and $format != 'json' {
       fail('Invalid format specified. Use \'text\' or \'json\'.')
