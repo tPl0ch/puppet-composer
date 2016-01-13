@@ -136,21 +136,21 @@ class composer(
     }
   }
 
-  if defined(File["${target_dir}/${composer_file}"]) == false {
-    exec { 'download_composer':
-      command   => $download_command,
-      cwd       => $tmp_path,
-      require   => $download_require,
-      creates   => "${tmp_path}/composer.phar",
-      logoutput => $logoutput,
-    }
-    # move file to target_dir
-    file { "${target_dir}/${composer_file}":
-      ensure  => present,
-      source  => "${tmp_path}/composer.phar",
-      require => [ Exec['download_composer'], File[$target_dir] ],
-      mode    => '0755',
-    }
+  # download composer if target_file doesn't exist
+  exec { "download_composer":
+    command   => $download_command,
+    cwd       => $tmp_path,
+    require   => $download_require,
+    creates   => "${tmp_path}/composer.phar",
+    logoutput => $logoutput,
+    onlyif    => "test ! -f ${target_dir}/${composer_file}",
+    path      => [ '/bin', '/usr/bin' ],
+    notify    => Exec["move_composer_${target_dir}"]
+  }
+  # move downloaded file to target_dir
+  exec { "move_composer_${target_dir}":
+    command     => "mv ${tmp_path}/composer.phar ${target_dir}/${composer_file}; chmod 0755 ${target_dir}/${composer_file}",
+    refreshonly => true,
   }
 
   if $auto_update == true {
