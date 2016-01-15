@@ -96,7 +96,7 @@ class composer(
   # download composer
   case $download_method {
     'curl': {
-      $download_command = "curl -sS https://getcomposer.org/installer | ${composer::php_bin}"
+      $download_command = "curl -sS https://getcomposer.org/installer | ${composer::php_bin} -- --install-dir=${tmp_path} --filename=composer.phar"
       $download_require = $suhosin_enabled ? {
         false    => [ Package['curl', $php_package] ],
         default  => [
@@ -138,15 +138,17 @@ class composer(
 
   # download composer if target_file doesn't exist
   exec { "download_composer":
-    command   => $download_command,
-    cwd       => $tmp_path,
-    require   => $download_require,
-    creates   => "${tmp_path}/composer.phar",
-    logoutput => $logoutput,
-    onlyif    => "test ! -f ${target_dir}/${composer_file}",
-    path      => [ '/bin', '/usr/bin' ],
-    notify    => Exec["move_composer_${target_dir}"]
+    command     => $download_command,
+    cwd         => $tmp_path,
+    require     => $download_require,
+    creates     => "${tmp_path}/composer.phar",
+    logoutput   => $logoutput,
+    onlyif      => "test ! -f ${target_dir}/${composer_file}",
+    path        => [ '/bin', '/usr/bin' ],
+    notify      => Exec["move_composer_${target_dir}"],
+    environment => ["COMPOSER_HOME=${composer::composer_home}"]
   }
+
   # move downloaded file to target_dir
   exec { "move_composer_${target_dir}":
     command     => "mv ${tmp_path}/composer.phar ${target_dir}/${composer_file}; chmod 0755 ${target_dir}/${composer_file}",
