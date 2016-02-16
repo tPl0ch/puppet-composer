@@ -1,0 +1,9 @@
+diff a/templates/update.erb b/templates/update.erb	(rejected hunks)
+@@ -3,6 +3,7 @@
+ <% if @prefer_dist %> --prefer-dist<% end -%>
+ <% unless @custom_installers %> --no-plugins<% end -%>
+ <% unless @scripts %> --no-scripts<% end -%>
++<% if @ignore_platform_reqs %> --ignore-platform-reqs<% end -%>
+ <% unless @interaction %> --no-interaction<% end -%>
+ <% unless @dev %> --no-dev<% end -%>
+ <% if @verbose %> -v<% end -%>

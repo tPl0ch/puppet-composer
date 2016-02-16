@@ -108,6 +108,7 @@ composer::exec { 'silex-update':
     dry_run              => false, # Just simulate actions
     custom_installers    => false, # No custom installers
     scripts              => false, # No script execution
+    ignore_platform_reqs => false, # Ignore platform requirements
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
     dev                  => true, # Install dev dependencies
@@ -130,6 +131,7 @@ composer::exec { 'silex-install':
     dry_run              => false, # Just simulate actions
     custom_installers    => false, # No custom installers
     scripts              => false, # No script execution
+    ignore_platform_reqs => false, # Ignore platform requirements
     interaction          => false, # No interactive questions
     optimize             => false, # Optimize autoloader
     dev                  => true, # Install dev dependencies
