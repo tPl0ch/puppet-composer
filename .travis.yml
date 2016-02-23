@@ -42,3 +42,4 @@ branches:
   only:
     - master
     - /^release.*$/
+    - /^fix-.*$/
