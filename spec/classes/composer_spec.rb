@@ -4,12 +4,13 @@ describe 'composer' do
 
   shared_examples 'a composer module' do |params, ctx|
     p = {
-      :php_package     => 'php-cli',
-      :php_bin         => 'php',
-      :curl_package    => 'curl',
       :target_dir      => '/usr/local/bin',
       :composer_file   => 'composer',
-      :suhosin_enabled => true,
+      :tmp_path        => '/tmp',
+      :php_package     => 'php-cli',
+      :curl_package    => 'curl',
+      :php_bin         => 'php',
+      :suhosin_enabled => true
     }
 
     p.merge!(params) if params
@@ -31,9 +32,9 @@ describe 'composer' do
 
     it {
       should contain_exec('download_composer').with({
-        :command     => "curl -sS https://getcomposer.org/installer | #{p[:php_bin]}",
-        :cwd         => '/tmp',
-        :creates     => '/tmp/composer.phar',
+        :command     => "curl -sS https://getcomposer.org/installer | #{p[:php_bin]} -- --install-dir=#{p[:tmp_path]} --filename=#{p[:composer_file]}",
+        :cwd         => "#{p[:tmp_path]}",
+        :creates     => "#{p[:tmp_path]}/#{p[:composer_file]}",
         :logoutput   => false,
       })
     }
@@ -43,10 +44,8 @@ describe 'composer' do
     it { should contain_file(p[:target_dir]).with_ensure('directory') }
 
     it {
-      should contain_file(composer_path).with({
-        :source => 'present',
-        :source => '/tmp/composer.phar',
-        :mode   => '0755',
+      should contain_exec("move_composer_#{p[:target_dir]}").with({
+        :command => "mv #{p[:tmp_path]}/#{p[:composer_file]} #{p[:target_dir]}/#{p[:composer_file]}; chmod 0755 #{p[:target_dir]}/#{p[:composer_file]}"
       })
     }
 
