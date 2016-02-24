@@ -4,12 +4,13 @@ describe 'composer' do
 
   shared_examples 'a composer module' do |params, ctx|
     p = {
-      :php_package     => 'php-cli',
-      :php_bin         => 'php',
-      :curl_package    => 'curl',
       :target_dir      => '/usr/local/bin',
       :composer_file   => 'composer',
-      :suhosin_enabled => true,
+      :tmp_path        => '/tmp',
+      :php_package     => 'php-cli',
+      :curl_package    => 'curl',
+      :php_bin         => 'php',
+      :suhosin_enabled => true
     }
 
     p.merge!(params) if params
