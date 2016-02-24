@@ -32,7 +32,7 @@ describe 'composer' do
 
     it {
       should contain_exec('download_composer').with({
-        :command     => "curl -sS https://getcomposer.org/installer | #{p[:php_bin]} -- --install-dir=#{p[:tmp_path]} --filename=composer.phar",
+        :command     => "curl -sS https://getcomposer.org/installer | #{p[:php_bin]} -- --install-dir=#{p[:tmp_path]} --filename=#{p[:composer_file]}",
         :cwd         => "#{p[:tmp_path]}",
         :creates     => "#{p[:tmp_path]}/#{p[:composer_file]}",
         :logoutput   => false,
@@ -45,7 +45,7 @@ describe 'composer' do
 
     it {
       should contain_exec("move_composer_#{p[:target_dir]}").with({
-        :command => "mv #{p[:tmp_path]}/#{p[:composer_file]} #{p[:target_dir]}/${composer_file}; chmod 0755 #{p[:target_dir]}/#{p[:composer_file]}"
+        :command => "mv #{p[:tmp_path]}/#{p[:composer_file]} #{p[:target_dir]}/#{p[:composer_file]}; chmod 0755 #{p[:target_dir]}/#{p[:composer_file]}"
       })
     }
 
