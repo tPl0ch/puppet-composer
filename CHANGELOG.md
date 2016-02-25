@@ -1,3 +1,62 @@
+v1.4.0
+======
+e0b07d0 Change logic to only download if composer doesn't exist
+        
+463bc76 Add schedule arg to composer::selfupdate
+        
+7a2e418 Fix line endings for files deployed from windows hosts.
+        
+v1.3.7
+======
+41932f8 Timeout process composer
+        
+74007f7 FreeBSD Support
+        
+4f96b84 Add puppet version 3.7 to allowed failures in travis ci
+        
+1370317 Adds "S" flag to curl command
+        
+v1.3.6
+======
+6a213df Add user parameter to init.pp
+        
+ff02a4b Add --no-interaction to composer::project
+        
+v1.3.5
+======
+e913fda First cleaning to get rid of most of the puppet lint warnings
+        
+7b11d68 Integrate Beaker for Acceptance Testing
+        
+v1.3.4
+======
+e2b7025 Fix param defaults for newer Ubuntu releases
+        
+4cedb23 Add an option to setup github token.
+        
+v1.3.3
+======
+6291b21 Use TLS (HTTPS) to retrieve composer.phar
+        
+v1.3.2
+======
+109e21d Added "cwd" option to the exec when the project is created
+        
+0c9b9df Add support for onlyif and unless exec options
+        
+17281cb :thumbsup: 
+        
+869c310 documents hiera dependency in puppets prior to version 3 #47
+        
+v1.3.0
+======
+        
+8e5e7e1 Pr require command
+        
+49c1f85 adding hiera support for creating projects
+        
+d8466ba Vagrant as a development and functional test environment
+
 v1.2.1
 ======
 f44b7e5 Now also supports Amazon Linux (RedHat)
