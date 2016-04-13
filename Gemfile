@@ -21,5 +21,6 @@ group :test do
   gem 'beaker-puppet_install_helper',  :require => false
   if RUBY_VERSION =~ /^1\.8/
     gem 'rake', '< 11'
+    gem 'addressable', '< 2.4'
   end
 end
