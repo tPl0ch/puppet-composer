@@ -1,15 +1,21 @@
+---
 language: ruby
+cache: bundler
 before_install:
+  - rm Gemfile.lock || true
   - gem update bundler
 rvm:
-  - 2.1.4
-  - 2.0.0
+  - 2.1
+  - 2.0
   - 1.9.3
   - 1.8.7
+bundler_args: --without test
+
 before_script:
+script:
+  - bundle exec rake spec
 after_script:
-script: "bundle exec rake spec"
-bundler_args: --without acceptance
+
 env:
   - PUPPET_VERSION=2.7.25
   - PUPPET_VERSION=3.1.1
@@ -23,17 +29,17 @@ matrix:
     - rvm: ruby-head
     - env: PUPPET_VERSION=3.7.3 FUTURE_PARSER="yes"
   exclude:
-    - rvm: 2.0.0
+    - rvm: 2.0
       env: PUPPET_VERSION=2.7.25
-    - rvm: 2.0.0
+    - rvm: 2.0
       env: PUPPET_VERSION=3.1.1
-    - rvm: 2.1.4
+    - rvm: 2.1
       env: PUPPET_VERSION=2.7.25
-    - rvm: 2.1.4
+    - rvm: 2.1
       env: PUPPET_VERSION=3.1.1
-    - rvm: 2.1.4
+    - rvm: 2.1
       env: PUPPET_VERSION=3.2.4
-    - rvm: 2.1.4
+    - rvm: 2.1
       env: PUPPET_VERSION=3.3.2
   fast_finish: true
 notifications:
