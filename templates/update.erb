@@ -4,6 +4,7 @@
 <% if @working_dir %> --working-dir=<%= @working_dir%><%end -%>
 <% unless @custom_installers %> --no-plugins<% end -%>
 <% unless @scripts %> --no-scripts<% end -%>
+<% if @ignore_platform_reqs %> --ignore-platform-reqs<% end -%>
 <% unless @interaction %> --no-interaction<% end -%>
 <% unless @dev %> --no-dev<% end -%>
 <% if @verbose %> -v<% end -%>

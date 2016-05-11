@@ -20,6 +20,7 @@ define composer::exec (
   $custom_installers        = false,
   $scripts                  = false,
   $optimize                 = false,
+  $ignore_platform_reqs     = false,
   $interaction              = false,
   $dev                      = true,
   $no_update                = false,
@@ -41,8 +42,8 @@ define composer::exec (
   validate_string($cmd, $cwd)
   validate_bool(
     $lock, $prefer_source, $prefer_dist, $dry_run,
-    $custom_installers, $scripts, $optimize, $interaction, $dev,
-    $verbose, $refreshonly
+    $custom_installers, $scripts, $optimize, $ignore_platform_reqs,
+    $interaction, $dev, $verbose, $refreshonly
   )
   validate_array($packages)
 
