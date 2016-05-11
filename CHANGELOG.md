@@ -1,3 +1,9 @@
+v1.4.1
+======
+0685d57 Add support for Composer’s --ignore-platform-reqs option
+        
+9a0b851 Fix tests in travis
+
 v1.4.0
 ======
 e0b07d0 Change logic to only download if composer doesn't exist
