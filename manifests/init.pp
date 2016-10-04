@@ -232,10 +232,12 @@ class composer(
     }
   }
 
-  if $projects or $::execs {
+  $execs = getvar('::execs')
+
+  if $projects or !empty($execs) {
     class {'composer::project_factory' :
       projects => $projects,
-      execs    => $::execs,
+      execs    => $execs,
     }
   }
 }
