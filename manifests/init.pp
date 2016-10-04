@@ -107,7 +107,7 @@ class composer(
       $method_package = $curl_package
     }
     'wget': {
-      $download_command = "wget https://getcomposer.org/composer.phar -O ${composer_file}"
+      $download_command = "wget https://getcomposer.org/composer.phar -O ${tmp_path}/${composer_file}"
       $download_require = $suhosin_enabled ? {
         false   => [ Package['wget', $php_package] ],
         default => [
